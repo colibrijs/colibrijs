@@ -1,0 +1,7 @@
+{
+  "name": "@colibrijs/api",
+  "version": "0.0.0",
+  "dependencies": {
+    "pg": "^8.11.1"
+  }
+}
