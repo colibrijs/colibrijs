@@ -1,7 +1,8 @@
 {
   "name": "colibrijs",
-  "workspaces": [
-    "packages/*"
-  ],
-  "packageManager": "yarn@3.6.1"
+  "workspaces": ["packages/*"],
+  "private": true,
+  "scripts": {
+    "api:start": "yarn workspace @colibrijs/api start"
+  }
 }
