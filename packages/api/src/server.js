@@ -11,10 +11,7 @@ const client = new pg.Client({
 });
 
 client.connect()
-  .then(() => {
-    return http
-      .createServer((_, res) => {
-        res.end(`My ip address is ${ip.address()}`, 'utf-8');
-      })
-      .listen(3000, () => console.log('Server is running on the port 3000'));
-  });
+  .then(() => http
+    .createServer((_, res) => res.end(`My ip address is ${ip.address()}`, 'utf-8'))
+    .listen(3000, () => console.log('Server is running on the port 3000'))
+  );
