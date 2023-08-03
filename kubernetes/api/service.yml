@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: colibrijs-api
+spec:
+  replicas: 1
+  # Deployment relates to pods that contain the label "project" with value "colibrijs-api"
+  selector:
+    matchLabels:
+      project: colibrijs-api
+  # Describe api pod
+  template:
+    metadata:
+      labels:
+        project: colibrijs-api
+    spec:
+      containers:
+        - name: colibrijs-api
+          image: ivanpodgornov/colibrijs-api:latest
+          env:
+            - name: DATABASE_HOST
+              value: 'database.default.svc.cluster.local'
+            - name: DATABASE_PORT
+              value: '5432'
+            - name: DATABASE_NAME
+              value: colibrijs
+            - name: DATABASE_PASSWORD
+              value: password
+            - name: DATABASE_USER
+              value: user
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: colibrijs-api
+spec:
+  selector:
+    # Select pods that have label "project" with value colibrijs-api
+    project: colibrijs-api
+  ports:
+    - name: api-listener
+      protocol: TCP
+      port: 3000 # outer port
+      targetPort: 3000 # pod port
+  type: NodePort

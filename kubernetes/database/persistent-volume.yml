@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: database-persistent-volume
+  labels:
+    type: local
+    app: database
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    # all database data will be saved to the local machine at the /data/db
+    path: '/data/db'

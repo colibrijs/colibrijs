@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  replicas: 1
+  selector:
+    # labels the pods
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        # The label the pods created from the pod template should have
+        app: database
+    spec:
+      containers:
+        # The container name to execute pods
+        - name: database
+          # pull postgresimage from docker hub
+          image: postgres:15-alpine
+          ports:
+            # Assign ports to expose container
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: colibrijs
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_USER
+              value: user
+          volumeMounts:
+            # The volume mounts  for the container
+            - mountPath: /var/lib/postgres/data
+              name: db-data
+      # Volumes attached to the pod
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            # reference the PersistentVolumeClaim
+            claimName: db-persistent-volume-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # Name your service
+  name: database
+  labels:
+    app: database
+spec:
+  type: NodePort
+  ports:
+    # The port number to expose the service
+    - port: 5432
+  # Pod to route service traffic
+  selector:
+    app: database
