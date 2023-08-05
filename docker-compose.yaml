@@ -33,7 +33,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    build: ./packages/api/
+    build: .
     restart: always
     environment:
       DATABASE_HOST: 'database'
@@ -41,6 +41,7 @@ services:
       POSTGRES_NAME: ${DATABASE_NAME-colibrijs}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD-password}
       DATABASE_USER: ${DATABASE_USER-user}
+      SERVICE: api
     profiles:
       - nodejs
     networks:
@@ -50,4 +51,4 @@ services:
 
 networks:
   database:
-    driver: host
+    driver: bridge

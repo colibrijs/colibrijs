@@ -1,3 +1,4 @@
+image: ghcr.io/colibrijs/colibrijs:latest
 database:
   password: password
   user: user

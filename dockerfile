@@ -1,10 +1,7 @@
-# docker build -t colibrijs-api:latest ./packages/api
-# docker run -p 3000:3000 -d colibrijs-api:latest
-# docker tag colibrijs-api:latest workspace/colibrijs-api:latest
-# docker push workspace/colibrijs-api:latest
-
 # Extends from nodejs image
 FROM node:18-alpine
+
+ENV SERVICE api
 
 # Project will available on the path /usr/colibrijs/api
 WORKDIR /usr/colibrijs/api
@@ -21,4 +18,4 @@ EXPOSE 3000
 
 # This command will be executed only when image is running. When image is building this command will
 # be skipped. So, the "RUN" we use for building image and the "CMD" for running application
-CMD ["yarn", "start"]
+CMD exec yarn start:$SERVICE

@@ -24,11 +24,20 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_DB
-              value: colibrijs
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: DATABASE_NAME
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.database.password }}
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: DATABASE_PASSWORD
             - name: POSTGRES_USER
-              value: {{ .Values.database.user }}
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: DATABASE_USER
           # Mount real path only if main branch is deploying
           {{- if eq .Release.Name "colibrijs" }}
           volumeMounts:

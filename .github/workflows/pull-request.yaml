@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - closed
+      - synchronize
+
+jobs:
+  deploy:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
+      - name: Login in to the container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: docker-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/colibrijs
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
+      - uses: ./.github/workflows/setup-kubernetes
+        with:
+          cluster-url: ${{ secrets.CLUSTER_URL }}
+      - name: Deploy image to kubernetes cluster
+        run: |
+          helm upgrade ${{ steps.metadata.outputs.release }} kubernetes \
+            --namespace ${{ steps.metadata.outputs.namespace }} \
+            --create-namespace \
+            --install \
+            --wait \
+            --timeout 2m0s \
+            --set image=${{ steps.docker-meta.outputs.tags }}
+
+  remove-deployment:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
+      - name: Delete docker image
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          owner: ${{ github.repository_owner }}
+          name: colibrijs
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: pr-${{ github.event.pull_request.number }}
+      - name: Setup kubernetes
+        uses: ./.github/workflows/setup-kubernetes
+        with:
+          cluster-url: ${{ secrets.CLUSTER_URL }}
+      - name: Delete deployment related to current pull request
+        run: helm uninstall ${{ steps.metadata.outputs.release }} --namespace ${{ steps.metadata.outputs.namespace }}
+      - name: Delete kubernetes namespace
+        run: kubectl delete namespace ${{ steps.metadata.outputs.namespace }} --wait=false

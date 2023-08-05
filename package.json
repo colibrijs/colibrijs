@@ -3,6 +3,6 @@
   "workspaces": ["packages/*"],
   "private": true,
   "scripts": {
-    "api:start": "yarn workspace @colibrijs/api start"
+    "start:api": "yarn workspace @colibrijs/api start"
   }
 }
