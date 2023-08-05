@@ -6,9 +6,9 @@ services:
     image: postgres:15-alpine
     restart: always
     healthcheck:
-      test: "pg_isready -q -U ${DATABASE_USER-user} -d ${DATABASE_NAME-colibrijs}"
+      test: "pg_isready -q -U ${DATABASE_USER-user} -d colibrijs"
     environment:
-      POSTGRES_DB: ${DATABASE_NAME-colibrijs}
+      POSTGRES_DB: colibrijs
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD-password}
       POSTGRES_USER: ${DATABASE_USER-user}
       PGDATA: /var/lib/postgresql/data/pgdata

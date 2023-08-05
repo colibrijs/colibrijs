@@ -26,32 +26,21 @@ spec:
             - name: POSTGRES_DB
               value: colibrijs
             - name: POSTGRES_PASSWORD
-              value: password
+              value: {{ .Values.database.password }}
             - name: POSTGRES_USER
-              value: user
+              value: {{ .Values.database.user }}
+          # Mount real path only if main branch is deploying
+          {{- if eq .Release.Name "colibrijs" }}
           volumeMounts:
-            # The volume mounts  for the container
+            # The volume mounts for the container
             - mountPath: /var/lib/postgres/data
               name: db-data
+          {{- end }}
       # Volumes attached to the pod
+      {{- if eq .Release.Name "colibrijs" }}
       volumes:
         - name: db-data
           persistentVolumeClaim:
             # reference the PersistentVolumeClaim
             claimName: db-persistent-volume-claim
----
-apiVersion: v1
-kind: Service
-metadata:
-  # Name your service
-  name: database
-  labels:
-    app: database
-spec:
-  type: NodePort
-  ports:
-    # The port number to expose the service
-    - port: 5432
-  # Pod to route service traffic
-  selector:
-    app: database
+      {{- end }}

@@ -1,3 +1,5 @@
+{{- $releaseNameWithРyphen:= printf "-%s" .Release.Name -}}
+{{- $postfix:= ternary "" $releaseNameWithРyphen (eq .Release.Name "colibrijs") -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -6,15 +8,13 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
-    # All requests to api.colibrijs.io will be proxied to the service with name "colibrijs-api" that
-    # accepts requests on the port 3000
-    - host: api.colibrijs.io
+    - host: api{{ $postfix }}.colibrijs.io
       http:
         paths:
           - pathType: Prefix
             path: '/'
             backend:
               service:
-                name: colibrijs-api
+                name: api
                 port:
                   number: 3000
