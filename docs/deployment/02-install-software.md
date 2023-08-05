@@ -7,8 +7,7 @@ links for this software. Follow them, follow instructions and everything will ok
 2. [Nginx](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04)
 3. [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 4. [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
-5. [Krew plugin manager](https://krew.sigs.k8s.io/)
-6. [Ingress rule plugin](https://github.com/pragaonj/ingress-rule-updater)
+5. [Helm](https://helm.sh/docs/intro/install/)
 
 Kubectl, krew and ingress rule plugin you must install also on the local computer. Because we will
 use these tools for managing our cluster.

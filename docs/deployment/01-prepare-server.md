@@ -84,9 +84,3 @@ sudo nano /etc/ssh/sshd_config
 # and UsePAM set values "no".
 sudo systemctl reload ssh
 ```
-
-## Install krew and ingress-rule plugin
-
-We use the [krew](https://krew.sigs.k8s.io/) plugin manager for kubectl. One of plugins, exactly the
-[ingress-rule](https://github.com/pragaonj/ingress-rule-updater) allow to modify ingress rules from
-command line. Install this tools and go on.

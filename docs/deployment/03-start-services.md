@@ -2,7 +2,7 @@
 
 ## Install ingress
 
-If `kubectl get ingress` returns 0 ingress services, install that one and start our ingress:
+If `kubectl get namespaces` doen't return service with name *ingress-nginx*, install that one:
 
 ```bash
 minikube addons enable ingress
@@ -20,35 +20,6 @@ ingress-nginx-controller-59b45fb494-26npt   1/1     Running     0          11m
 If something went wrong, see instructions
 [here](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/).
 
-
-## Start our ingress
-
-```bash
-kubectl apply -f ./kubernetes/ingress/hosts.yml
-```
-
-## Start database
-
-For deploying an application,we need to run the database:
-
-```bash
-# Create persistent volume for store the database
-kubectl apply -f ./kubernetes/database/persistent-volume.yml
-# For now, I don't known what is it, but it's here
-kubectl apply -f ./kubernetes/database/volume-claim.yml
-# Create deployment for database
-kubectl apply -f ./kubernetes/database/deployment.yml
-# Create service for database
-kubectl apply -f ./kubernetes/database/service.yml
-```
-
-## Start API
-
-Now, run the api:
-
-```bash
-kubectl apply -f ./kubernetes/api/service.yml
-```
 
 ## Proxy requests to service
 
@@ -75,6 +46,16 @@ server {
 
 Remove default nginx site: `sudo rm /etc/nginx/sites-enabled/default`.
 Reload nginx: `sudo service nginx reload`.
+
+## Create deployment
+
+For starting the last release of colibrijs, run the command:
+
+```bash
+helm install colibrijs kubernetes --namespace colibrijs-main
+```
+
+This command will deploy our services to kubernetes namespace with name colibrijs-main.
 
 ## Check
 
