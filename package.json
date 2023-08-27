@@ -1,0 +1,8 @@
+{
+  "name": "colibrijs",
+  "workspaces": ["packages/*"],
+  "private": true,
+  "scripts": {
+    "start:api": "yarn workspace @colibrijs/api start"
+  }
+}

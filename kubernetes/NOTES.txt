@@ -1,0 +1,14 @@
+For deploying this chart you must create an images that will be deployed. If you want to release the
+main branch, you must create the docker image "ivanpodgornov/colibrijs-api:latest". Or if you want
+to release any other branch, image must have a tag with the branch name. For example
+"ivanpodgornov/colibrijs:issue-n".
+
+If you are deploying the main branch, all services will be available by their habitual addresses.
+But, for other branches a postfix will be added. For example api for branch "issue-n", will be
+available on the "api-issue-n.colibrijs.io".
+
+Command for deploying the main branch:
+helm install colibrijs kubernetes --namespace colibrijs-main --create-namespace
+
+And for deploying any other branch:
+helm install branchName kubernetes --namespace colibrijs-branchName --create-namespace

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # If we are deploying the main branch, we use the latest docker image. Otherwise we will use the
+  # image with tag of release name
+  name: api
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  # Deployment relates to pods that contain the label "project" with value "api"
+  selector:
+    matchLabels:
+      project: api
+  # Describe api pod
+  template:
+    metadata:
+      labels:
+        project: api
+    spec:
+      containers:
+        - name: api
+          image: {{ .Values.image }}
+          imagePullPolicy: Always
+          env:
+            - name: SERVICE
+              value: api
+            - name: DATABASE_HOST
+              value: database.{{ .Release.Namespace }}.svc.cluster.local
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: DATABASE_PASSWORD
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: DATABASE_USER
+          envFrom:
+            - configMapRef:
+                name: configmap
+          ports:
+            - containerPort: 3000

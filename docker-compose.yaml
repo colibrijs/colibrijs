@@ -1,0 +1,54 @@
+version: '3.7'
+services:
+
+  database:
+    container_name: postgres
+    image: postgres:15-alpine
+    restart: always
+    healthcheck:
+      test: "pg_isready -q -U ${DATABASE_USER-user} -d colibrijs"
+    environment:
+      POSTGRES_DB: colibrijs
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD-password}
+      POSTGRES_USER: ${DATABASE_USER-user}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      - database
+    ports:
+      - 5432:5432
+    volumes:
+      - .:/var/lib/postgresql/data
+
+  database-admin:
+    container_name: adminer
+    image: adminer:4.8.1-standalone
+    restart: always
+    networks:
+      - database
+    ports:
+      - 8080:8080
+
+  api:
+    container_name: colibrijs-api
+    depends_on:
+      database:
+        condition: service_healthy
+    build: .
+    restart: always
+    environment:
+      DATABASE_HOST: 'database'
+      DATABASE_PORT: 5432
+      POSTGRES_NAME: ${DATABASE_NAME-colibrijs}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD-password}
+      DATABASE_USER: ${DATABASE_USER-user}
+      SERVICE: api
+    profiles:
+      - nodejs
+    networks:
+      - database
+    ports:
+      - 3000:3000
+
+networks:
+  database:
+    driver: bridge
