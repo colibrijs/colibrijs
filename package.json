@@ -1,8 +1,14 @@
 {
   "name": "colibrijs",
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "private": true,
   "scripts": {
     "start:api": "yarn workspace @colibrijs/api start"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   }
 }
