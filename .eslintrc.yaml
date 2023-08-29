@@ -24,6 +24,9 @@ settings:
     typescript: {}
 rules:
   eslint-comments/require-description: error
+  # This rule is offed, because we use esm-modules and some external packages are commonjs modules.
+  # And theirs "module.exports" dont't work in esm
+  import/no-named-as-default-member: off
   import/order:
     - error
     - newlines-between: always-and-inside-groups
