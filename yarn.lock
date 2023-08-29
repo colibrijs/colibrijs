@@ -1457,6 +1457,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+editorconfig-checker@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/editorconfig-checker/-/editorconfig-checker-5.1.1.tgz#97b314647068b68bf1210f3d6b597c1fc9b20ded"
+  integrity sha512-IBE7K48+6jLlhfmJ0TOTjogvO9Asw+4B8CoKn71KtZ8Qrvc7/WgrMyJxQRSdq6VGdh+D65/6JuQuHioMs2O1sw==
+
 electron-to-chromium@^1.4.477:
   version "1.4.504"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.504.tgz#975522945676cf2d55910988a169f07b83081488"
