@@ -1,14 +1,19 @@
 {
   "name": "@colibrijs/api",
   "version": "0.0.0",
-  "main": "src/server.js",
+  "main": "src/server.ts",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./src/server.js"
+    "start": "ts-node-esm ./src/server.ts"
   },
   "dependencies": {
     "ip": "^1.1.8",
     "pg": "^8.11.1"
+  },
+  "devDependencies": {
+    "@types/ip": "^1.1.0",
+    "@types/node": "^20.5.7",
+    "@types/pg": "^8.10.2"
   }
 }
