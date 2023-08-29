@@ -13,8 +13,10 @@
     "packages/*"
   ],
   "scripts": {
-    "lint": "yarn lint:ts",
+    "lint": "yarn lint:duplicates && yarn lint:ts",
+    "lint:duplicates": "yarn-deduplicate --list --fail",
     "lint:ts": "eslint ./packages/*/src/",
+    "postinstall": "yarn-deduplicate",
     "start:api": "yarn workspace @colibrijs/api start",
     "test": "yarn test:unit",
     "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest)"
@@ -36,6 +38,7 @@
     "prettier": "^3.0.2",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "yarn-deduplicate": "^6.0.2"
   }
 }
