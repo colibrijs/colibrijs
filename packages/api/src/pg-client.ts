@@ -1,4 +1,4 @@
-import pg, { type ClientConfig } from 'pg';
+import { Client, type ClientConfig } from 'pg';
 
 const config: ClientConfig = {
   user: process.env.DATABASE_USER ?? 'user',
@@ -8,4 +8,4 @@ const config: ClientConfig = {
   database: process.env.DATABASE_NAME ?? 'colibrijs',
 };
 
-export const client = new pg.Client(config);
+export const client = new Client(config);

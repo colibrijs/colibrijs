@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
-    "allowImportingTsExtensions": true,                  /* Allow imports to include TypeScript file extensions. Requires '--moduleResolution bundler' and either '--noEmit' or '--emitDeclarationOnly' to be set. */
     "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "experimentalDecorators": true,                      /* Enable experimental support for legacy experimental decorators. */
     "emitDecoratorMetadata": true,                       /* Emit design-type metadata for decorated declarations in source files. */
@@ -13,6 +12,7 @@
     "removeComments": true,                              /* Disable emitting comments. */
     "importHelpers": true,                               /* Allow importing helper functions from tslib once per project, instead of including them per-file. */
     "isolatedModules": true,                             /* Ensure that each file can be safely transpiled without relying on other imports. */
+    "noEmitOnError": true,                               /* Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported */
     "verbatimModuleSyntax": true,                        /* Do not transform or elide any imports or exports not marked as type-only, ensuring they are written in the output file's format based on the 'module' setting. */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
