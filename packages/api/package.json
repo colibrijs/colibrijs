@@ -1,19 +1,35 @@
 {
   "name": "@colibrijs/api",
   "version": "0.0.0",
-  "main": "src/server.ts",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "ts-node-esm ./src/server.ts"
+    "dev": "yarn migration:run && nest start --watch",
+    "prestart": "yarn migration:run",
+    "start": "ts-node-esm ./src/main.ts",
+    "migration:create": "typeorm-ts-node-esm migration:create",
+    "migration:generate": "typeorm-ts-node-esm migration:generate --dataSource ./src/data-source.ts",
+    "migration:run": "typeorm-ts-node-esm migration:run --dataSource ./src/data-source.ts --transaction none",
+    "migration:revert": "typeorm-ts-node-esm migration:revert --dataSource ./src/data-source.ts --transaction none"
   },
   "dependencies": {
-    "ip": "^1.1.8",
-    "pg": "^8.11.1"
+    "@fastify/static": "^6.10.2",
+    "@nestjs/common": "^10.2.2",
+    "@nestjs/config": "^3.0.0",
+    "@nestjs/core": "^10.2.2",
+    "@nestjs/platform-fastify": "^10.2.2",
+    "@nestjs/swagger": "^7.1.10",
+    "@nestjs/typeorm": "^10.0.0",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.1",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
+    "@nestjs/cli": "^10.1.16",
+    "@nestjs/schematics": "^10.0.2",
     "@types/ip": "^1.1.0",
-    "@types/node": "^20.5.7",
-    "@types/pg": "^8.10.2"
+    "@types/node": "^20.5.7"
   }
 }

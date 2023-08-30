@@ -27,6 +27,10 @@ spec:
           env:
             - name: SERVICE
               value: api
+            - name: SERVER_HOST
+              value: '0.0.0.0'
+            - name: SERVER_PORT
+              value: '3000'
             - name: DATABASE_HOST
               value: database.{{ .Release.Namespace }}.svc.cluster.local
             - name: DATABASE_PASSWORD

@@ -13,12 +13,13 @@
     "packages/*"
   ],
   "scripts": {
+    "dev:api": "yarn workspace @colibrijs/api dev",
     "lint": "yarn lint:editorconfig && yarn lint:duplicates && yarn lint:ts",
     "lint:last-commit": "commitlint --edit \"$1\" --strict",
     "lint:duplicates": "yarn-deduplicate --list --fail",
     "lint:editorconfig": "editorconfig-checker",
-    "lint:ts": "eslint ./packages/*/src/",
-    "pre-commit": "yarn lint:last-commit",
+    "lint:ts": "yarn tsc -noEmit && eslint ./packages/*/src/",
+    "pre-commit": "yarn lint:last-commit && yarn lint:ts",
     "postinstall": "yarn-deduplicate",
     "start:api": "yarn workspace @colibrijs/api start",
     "test": "yarn test:unit",
