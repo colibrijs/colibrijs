@@ -1,12 +1,16 @@
 {
   "name": "@colibrijs/api",
   "version": "0.0.0",
-  "main": "src/server.ts",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nest start --watch",
-    "start": "nest start"
+    "dev": "yarn migration:run && nest start --watch",
+    "prestart": "yarn migration:run",
+    "start": "ts-node-esm ./src/main.ts",
+    "migration:create": "typeorm-ts-node-esm migration:create",
+    "migration:generate": "typeorm-ts-node-esm migration:generate --dataSource ./src/data-source.ts",
+    "migration:run": "typeorm-ts-node-esm migration:run --dataSource ./src/data-source.ts --transaction none",
+    "migration:revert": "typeorm-ts-node-esm migration:revert --dataSource ./src/data-source.ts --transaction none"
   },
   "dependencies": {
     "@nestjs/common": "^10.2.2",

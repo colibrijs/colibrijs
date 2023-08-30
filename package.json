@@ -13,6 +13,7 @@
     "packages/*"
   ],
   "scripts": {
+    "dev:api": "yarn workspace @colibrijs/api dev",
     "lint": "yarn lint:editorconfig && yarn lint:duplicates && yarn lint:ts",
     "lint:last-commit": "commitlint --edit \"$1\" --strict",
     "lint:duplicates": "yarn-deduplicate --list --fail",
