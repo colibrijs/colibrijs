@@ -13,10 +13,12 @@
     "migration:revert": "typeorm-ts-node-esm migration:revert --dataSource ./src/data-source.ts --transaction none"
   },
   "dependencies": {
+    "@fastify/static": "^6.10.2",
     "@nestjs/common": "^10.2.2",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.2.2",
     "@nestjs/platform-fastify": "^10.2.2",
+    "@nestjs/swagger": "^7.1.10",
     "@nestjs/typeorm": "^10.0.0",
     "dotenv": "^16.3.1",
     "ip": "^1.1.8",

@@ -14,3 +14,21 @@ migration class. It is recommended.
 - **migrations:generate** *./src/migrations/transaction-name* - generate migration from source code
 - **migrations:run** - run migrations
 - **migrations:revert** - revert the changes
+
+## OpenAPI
+
+The API generates a Swagger documentation, which is available on the API host at `/swagger`. You can
+generate an API client from the OpenAPI schema.
+
+1. Follow the linl to `/swagger`.
+1. Follow the link to OpenAPI.
+2. Choose any tool for generating clients from the OpenAPI schema.
+3. Use this tool.
+
+For example, if you want to generate a TypeScript package with an API client, you can use
+[swagger-typescript-api](https://www.npmjs.com/package/swagger-typescript-api). Just run this
+command, and the API client will be ready for use:
+
+```bash
+npx swagger-typescript-api -p INSERT-URL-TO-OPENAPI-HERE --extract-request-params --extract-request-body --extract-response-body --extract-response-error --patch
+```
