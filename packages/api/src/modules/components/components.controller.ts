@@ -1,8 +1,8 @@
 import { Controller, Get, Inject, Param } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { Component } from './component.entity.js';
-import { ComponentsService } from './components.service.js';
+import { Component } from './component.entity';
+import { ComponentsService } from './components.service';
 
 @ApiTags('Components')
 @Controller('components')

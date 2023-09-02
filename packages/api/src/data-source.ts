@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 
-import { Component } from './modules/components/component.entity.js';
+import { Component } from './modules/components/component.entity';
 
 const config = new ConfigService();
 

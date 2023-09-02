@@ -2,11 +2,10 @@
   "name": "@colibrijs/api",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "yarn migration:run && nest start --watch",
     "prestart": "yarn migration:run",
-    "start": "ts-node-esm ./src/main.ts",
+    "start": "ts-node ./src/main.ts",
     "migration:create": "typeorm-ts-node-esm migration:create",
     "migration:generate": "typeorm-ts-node-esm migration:generate --dataSource ./src/data-source.ts",
     "migration:run": "typeorm-ts-node-esm migration:run --dataSource ./src/data-source.ts --transaction none",

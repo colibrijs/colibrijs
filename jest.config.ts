@@ -8,20 +8,10 @@ const jestConfig: JestConfigWithTsJest = {
   projects: ['api'].map((packageName) => ({
     displayName: `@colibrijs/${packageName}`,
     testMatch: [`<rootDir>/packages/${packageName}/src/**/*.spec.ts`],
-    extensionsToTreatAsEsm: ['.ts'],
-    moduleNameMapper: {
-      '^(\\.{1,2}/.*)\\.js$': '$1',
-    },
-    preset: 'ts-jest/presets/default-esm',
+    preset: 'ts-jest/presets/default',
     testEnvironment: 'node',
     transform: {
-      '^.+\\.tsx?$': [
-        'ts-jest',
-        {
-          useESM: true,
-          tsconfig: './tsconfig.json',
-        },
-      ],
+      '^.+\\.tsx?$': ['ts-jest', {}],
     },
   })),
 };

@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppController } from './app.controller.js';
-import { ComponentsModule } from './components/index.js';
-import { dataSource } from '../data-source.js';
+import { AppController } from './app.controller';
+import { ComponentsModule } from './components/index';
+import { dataSource } from '../data-source';
 
 @Module({
   controllers: [AppController],
