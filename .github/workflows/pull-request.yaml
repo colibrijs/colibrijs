@@ -72,7 +72,7 @@ jobs:
             --create-namespace \
             --install \
             --wait \
-            --timeout 2m0s \
+            --timeout 3m0s \
             --set image=${{ steps.docker-meta.outputs.tags }}
 
   remove-deployment:

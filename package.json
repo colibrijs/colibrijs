@@ -1,7 +1,6 @@
 {
   "name": "colibrijs",
   "private": true,
-  "type": "module",
   "author": {
     "name": "Ivan Podgornov",
     "email": "ivan.podgornov@live.com"
@@ -23,7 +22,7 @@
     "postinstall": "yarn-deduplicate",
     "start:api": "yarn workspace @colibrijs/api start",
     "test": "yarn test:unit",
-    "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest)"
+    "test:unit": "jest"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
