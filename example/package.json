@@ -1,0 +1,17 @@
+{
+  "name": "@colibrijs/example",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./src/example.jsx",
+  "scripts": {
+    "build": "yarn colibri build",
+    "dev": "yarn colibri development"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@colibrijs/cli": "1.0.0"
+  }
+}
