@@ -9,6 +9,7 @@
     "node": "^18"
   },
   "workspaces": [
+    "example",
     "packages/*"
   ],
   "scripts": {

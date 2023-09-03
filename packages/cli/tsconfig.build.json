@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["./src/"],
+  "compilerOptions": {
+    "noEmitOnError": true,
+    "outDir": "dist",
+    "verbatimModuleSyntax": false
+  }
+}
