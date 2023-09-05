@@ -1,21 +1,30 @@
-# Extends from nodejs image
-FROM node:18-alpine
+FROM node:18.17.1-alpine as builder
 
-ENV SERVICE api
+WORKDIR /usr/colibrijs
 
-# Project will available on the path /usr/colibrijs/api
-WORKDIR /usr/colibrijs/api
+COPY package.json package.json
+COPY yarn.lock yarn.lock
+COPY ./packages/api/package.json ./packages/api/package.json
 
-# Copy all files from os to working dir inside container.
-# We need to copy all project, because we work in monorepo.
+RUN yarn install --frozen-lockfile --ignore-scripts --production
+
 COPY . .
 
-# Install dependencies
-RUN yarn install --frozen-lockfile --ignore-scripts
+FROM node:18.17.1-alpine as runner
 
-# Our api works on the port 3000, so we expose this port
+WORKDIR /usr/colibrijs
+
+ENV NODE_ENV production
+ENV SERVICE api
+
+# ROOT
+COPY --from=builder /usr/colibrijs/node_modules ./node_modules
+COPY --from=builder /usr/colibrijs/package.json ./package.json
+COPY --from=builder /usr/colibrijs/tsconfig.json ./tsconfig.json
+
+# API
+COPY --from=builder /usr/colibrijs/packages/api ./packages/api
+
 EXPOSE 3000
 
-# This command will be executed only when image is running. When image is building this command will
-# be skipped. So, the "RUN" we use for building image and the "CMD" for running application
 CMD exec yarn start:$SERVICE

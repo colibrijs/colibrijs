@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "yarn migration:run && nest start --watch",
     "prestart": "yarn migration:run",
-    "start": "ts-node ./src/main.ts",
+    "start": "ts-node ./src/main.ts -p ./tsconfig.build.json",
     "migration:create": "typeorm-ts-node-esm migration:create",
     "migration:generate": "typeorm-ts-node-esm migration:generate --dataSource ./src/data-source.ts",
     "migration:run": "typeorm-ts-node-esm migration:run --dataSource ./src/data-source.ts --transaction none",
@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "@fastify/static": "^6.10.2",
+    "@nestjs/cli": "^10.1.16",
     "@nestjs/common": "^10.2.2",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.2.2",
     "@nestjs/platform-fastify": "^10.2.2",
+    "@nestjs/schematics": "^10.0.2",
     "@nestjs/swagger": "^7.1.10",
     "@nestjs/typeorm": "^10.0.0",
     "dotenv": "^16.3.1",
@@ -26,9 +28,11 @@
     "typeorm": "^0.3.17"
   },
   "devDependencies": {
-    "@nestjs/cli": "^10.1.16",
-    "@nestjs/schematics": "^10.0.2",
     "@types/ip": "^1.1.0",
     "@types/node": "^20.5.7"
+  },
+  "peerDependencies": {
+    "tsnode": "*",
+    "typescript": "*"
   }
 }
