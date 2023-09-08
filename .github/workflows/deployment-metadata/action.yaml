@@ -3,7 +3,7 @@ name: Get metadata for deployment
 outputs:
   branch:
     description: Name of published branch
-    value: ${{ steps.save-branch.ouputs.branch }}
+    value: ${{ steps.save-branch.outputs.branch }}
   namespace:
     description: Name of namespace
     value: ${{ steps.save-namespace-release.outputs.namespace }}
