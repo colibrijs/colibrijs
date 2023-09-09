@@ -5,7 +5,7 @@ import type { JestConfigWithTsJest } from 'ts-jest';
 
 const jestConfig: JestConfigWithTsJest = {
   reporters: ['default', ['github-actions', { silent: false }]],
-  projects: ['api', 'cli'].map((packageName) => ({
+  projects: ['api', 'cli', 'core'].map((packageName) => ({
     displayName: `@colibrijs/${packageName}`,
     testMatch: [`<rootDir>/packages/${packageName}/src/**/*.spec.ts`],
     preset: 'ts-jest/presets/default',
