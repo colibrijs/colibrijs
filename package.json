@@ -24,6 +24,7 @@
     "postinstall": "yarn-deduplicate",
     "start:api": "yarn workspace @colibrijs/api start",
     "test": "yarn test:unit",
+    "test:interactions": "yarn workspace @colibrijs/core test",
     "test:unit": "jest"
   },
   "dependencies": {

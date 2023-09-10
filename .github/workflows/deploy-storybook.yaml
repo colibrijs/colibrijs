@@ -19,19 +19,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: yarn
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Save metadata about deployment
         uses: ./.github/workflows/deployment-metadata
         id: metadata
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
-      - name: Build storybook
-        run: yarn workspace @colibrijs/core build
       - name: Download the github-pages artifact
         id: download-artifact
         uses: dawidd6/action-download-artifact@v2
@@ -43,19 +35,19 @@ jobs:
       # before we will work with files, we need to extract them.
       - name: Extract github-pages archive
         if: steps.download-artifact.outcome == 'success'
-        run: tar -xvf ./github-pages/artifact.tar
+        run: tar -xvf ./github-pages/artifact.tar --directory ./github-pages
       - name: Remove old files for current branch and archive
         if: steps.download-artifact.outcome == 'success'
         run: |
           rm ./github-pages/artifact.tar
           rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
-      - name: Copy builded storybook to github-pages
-        run: |
-          mkdir -p ./github-pages
-          cp -a ./packages/core/storybook-static ./github-pages
-          mv ./github-pages/storybook-static ./github-pages/${{ steps.metadata.outputs.branch }}
-          cd ./github-pages
-          ls -la
+      - name: Download storybook build
+        uses: actions/download-artifact@v3
+        with:
+          name: storybook
+          path: ./github-pages/${{ steps.metadata.outputs.branch }}
+      - name: Log github-pages content
+        run: cd ./github-pages && ls -la
       - name: Upload new github-pages
         uses: actions/upload-pages-artifact@v2
         with:

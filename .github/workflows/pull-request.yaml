@@ -24,7 +24,9 @@ jobs:
           node-version: 18
           cache: yarn
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: |
+          yarn install --frozen-lockfile --ignore-scripts
+          npx playwright install
       - name: Lint code
         run: yarn lint
       - if: github.event_name == 'pull_request'
@@ -32,6 +34,15 @@ jobs:
         run: yarn commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
       - name: Run tests
         run: yarn test
+      - name: Build storybook
+        run: yarn workspace @colibrijs/core build
+      - name: Test interactions
+        run: yarn test:interactions
+      - name: Upload storybook to artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: storybook
+          path: ./packages/core/storybook-static
 
   deploy-storybook:
     if: github.event.action != 'closed'
