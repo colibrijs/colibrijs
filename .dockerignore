@@ -2,3 +2,4 @@ node_modules
 pgdata
 *.spec.ts
 *.spec.tsx
+./packages/cms/tsconfig.json

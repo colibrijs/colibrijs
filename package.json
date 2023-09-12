@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "dev:api": "yarn workspace @colibrijs/api dev",
+    "dev:cms": "yarn workspace @colibrijs/cms dev",
     "dev:core": "yarn workspace @colibrijs/core dev",
     "lint": "yarn lint:editorconfig && yarn lint:duplicates && yarn lint:ts",
     "lint:last-commit": "commitlint --edit \"$1\" --strict",
@@ -23,11 +24,13 @@
     "pre-commit": "yarn lint:last-commit && yarn lint:ts",
     "postinstall": "yarn-deduplicate",
     "start:api": "yarn workspace @colibrijs/api start",
+    "start:cms": "yarn workspace @colibrijs/cms start",
     "test": "yarn test:unit",
     "test:interactions": "yarn workspace @colibrijs/core test",
     "test:unit": "jest"
   },
   "dependencies": {
+    "next": "^13.4.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ts-node": "^10.9.1"

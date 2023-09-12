@@ -2,6 +2,9 @@ node_modules
 pgdata
 dist
 
-# core
+# cms
 
+packages/cms/.next
+
+# core
 packages/core/storybook-static

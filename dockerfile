@@ -1,16 +1,9 @@
-FROM node:18.17.1-alpine as builder
+# yarn install --frozen-lockfile --no-scripts
+# yarn workspace @colibrijs/cms build
+# yarn install --frozen-lockfile --no-scripts --production
+# docker build -t colibrijs
 
-WORKDIR /usr/colibrijs
-
-COPY package.json package.json
-COPY yarn.lock yarn.lock
-COPY ./packages/api/package.json ./packages/api/package.json
-
-RUN yarn install --frozen-lockfile --ignore-scripts --production
-
-COPY . .
-
-FROM node:18.17.1-alpine as runner
+FROM node:18.17.1-alpine
 
 WORKDIR /usr/colibrijs
 
@@ -18,13 +11,21 @@ ENV NODE_ENV production
 ENV SERVICE api
 
 # ROOT
-COPY --from=builder /usr/colibrijs/node_modules ./node_modules
-COPY --from=builder /usr/colibrijs/package.json ./package.json
-COPY --from=builder /usr/colibrijs/tsconfig.json ./tsconfig.json
+COPY ./node_modules ./node_modules
+COPY ./package.json ./package.json
+COPY ./tsconfig.json ./tsconfig.json
 
 # API
-COPY --from=builder /usr/colibrijs/packages/api ./packages/api
+COPY ./packages/api ./packages/api
+
+# CMS
+
+COPY ./packages/cms/.next ./packages/cms/.next
+COPY ./packages/cms/node_modules ./packages/cms/node_modules
+COPY ./packages/cms/next.config.js ./packages/cms/next.config.js
+COPY ./packages/cms/package.json ./packages/cms/package.json
 
 EXPOSE 3000
+EXPOSE 3001
 
 CMD exec yarn start:$SERVICE
