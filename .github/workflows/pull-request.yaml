@@ -71,6 +71,16 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Build cms
+        run: yarn workspace @colibrijs/cms build
+      - name: Install only production dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts --production
       - name: Save metadata about deployment
         uses: ./.github/workflows/deployment-metadata
         id: metadata

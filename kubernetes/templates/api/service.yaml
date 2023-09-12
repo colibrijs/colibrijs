@@ -4,7 +4,7 @@ metadata:
   name: api
 spec:
   selector:
-    # Select pods that have label "project" with value colibrijs-api
+    # Select pods that have label "project" with value api
     project: api
   ports:
     - name: api-listener
