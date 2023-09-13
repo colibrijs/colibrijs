@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "dev:api": "yarn workspace @colibrijs/api dev",
+    "dev:app": "yarn workspace @colibrijs/app dev",
     "dev:cms": "yarn workspace @colibrijs/cms dev",
     "dev:core": "yarn workspace @colibrijs/core dev",
     "lint": "yarn lint:editorconfig && yarn lint:duplicates && yarn lint:ts",
@@ -24,6 +25,7 @@
     "pre-commit": "yarn lint:last-commit && yarn lint:ts",
     "postinstall": "yarn-deduplicate",
     "start:api": "yarn workspace @colibrijs/api start",
+    "start:app": "yarn workspace @colibrijs/app start",
     "start:cms": "yarn workspace @colibrijs/cms start",
     "test": "yarn test:unit",
     "test:interactions": "yarn workspace @colibrijs/core test",
@@ -43,6 +45,7 @@
     "@jest/globals": "^29.6.4",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.7",
+    "@types/react": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "editorconfig-checker": "^5.1.1",
