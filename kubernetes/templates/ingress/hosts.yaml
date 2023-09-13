@@ -1,5 +1,7 @@
 {{- $releaseNameWithРyphen:= printf "-%s" .Release.Name -}}
+{{- $releaseNameWithTrailingDot:= printf "%s." .Release.Name -}}
 {{- $postfix:= ternary "" $releaseNameWithРyphen (eq .Release.Name "colibrijs") -}}
+{{- $appPostfix:= ternary "" $releaseNameWithTrailingDot (eq .Release.Name "colibrijs") -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -27,3 +29,16 @@ spec:
                 name: cms
                 port:
                   number: 3001
+
+    # For the main branch, here must be colibrijs.io
+    # For other branches - releaseName.colibrijs.io
+    - host: {{ $appPostfix }}colibrijs.io
+      http:
+        paths:
+          - pathType: Prefix
+            path: '/'
+            backend:
+              service:
+                name: app
+                port:
+                  number: 3002
