@@ -1,5 +1,6 @@
 # yarn install --frozen-lockfile --ignore-scripts
 # yarn workspace @colibrijs/cms build
+# yarn workspace @colibrijs/app build
 # yarn install --frozen-lockfile --ignore-scripts --production
 # docker build . -t colibrijs
 
@@ -16,15 +17,19 @@ COPY package.json package.json
 COPY tsconfig.json tsconfig.json
 
 # API
+EXPOSE 3000
 COPY ./packages/api ./packages/api
 
-# CMS
+# APP
+EXPOSE 3002
+COPY ./packages/app/.next ./packages/app/.next
+COPY ./packages/app/node_modules ./packages/app/node_modules
+COPY ./packages/app/package.json ./packages/app/package.json
 
+# CMS
+EXPOSE 3001
 COPY ./packages/cms/.next ./packages/cms/.next
 COPY ./packages/cms/node_modules ./packages/cms/node_modules
 COPY ./packages/cms/package.json ./packages/cms/package.json
-
-EXPOSE 3000
-EXPOSE 3001
 
 CMD exec yarn start:$SERVICE
