@@ -10,7 +10,8 @@
   },
   "workspaces": [
     "example",
-    "packages/*"
+    "packages/*",
+    "tools/*"
   ],
   "scripts": {
     "dev:api": "yarn workspace @colibrijs/api dev",

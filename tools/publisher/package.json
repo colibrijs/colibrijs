@@ -1,0 +1,9 @@
+{
+  "name": "@colibrijs/publisher",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./src/main.ts",
+  "dependencies": {
+    "glob": "^10.3.4"
+  }
+}

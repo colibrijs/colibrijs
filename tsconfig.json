@@ -18,5 +18,11 @@
     "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
     "jsx": "react"                                       /* Controls how JSX constructs are emitted in JavaScript files. */
   },
-  "include": ["commitlint.config.ts", "jest.config.ts", "./example/src/", "./packages/*/src/"]
+  "include": [
+    "commitlint.config.ts",
+    "jest.config.ts",
+    "./example/src/",
+    "./packages/*/src/",
+    "./tools/*/src"
+  ]
 }
