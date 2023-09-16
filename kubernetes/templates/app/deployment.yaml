@@ -24,6 +24,9 @@ spec:
         - name: app
           image: {{ .Values.image }}
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1Gi
           env:
             - name: SERVICE
               value: app

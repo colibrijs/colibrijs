@@ -24,6 +24,9 @@ spec:
         - name: api
           image: {{ .Values.image }}
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1Gi
           env:
             - name: SERVICE
               value: api
