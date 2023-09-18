@@ -24,6 +24,9 @@ spec:
         - name: cms
           image: {{ .Values.image }}
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 1Gi
           env:
             - name: SERVICE
               value: cms

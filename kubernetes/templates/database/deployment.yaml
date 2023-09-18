@@ -19,6 +19,9 @@ spec:
         - name: database
           # pull postgresimage from docker hub
           image: postgres:15-alpine
+          resources:
+            limits:
+              memory: 1Gi
           ports:
             # Assign ports to expose container
             - containerPort: 5432
