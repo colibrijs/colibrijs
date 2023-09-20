@@ -140,3 +140,24 @@ jobs:
         run: helm uninstall ${{ steps.metadata.outputs.release }} --namespace ${{ steps.metadata.outputs.namespace }}
       - name: Delete kubernetes namespace
         run: kubectl delete namespace ${{ steps.metadata.outputs.namespace }} --wait=false
+
+  publish-packages:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Publish Packages
+        run: yarn workspace @colibrijs/publisher start --cwd .
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
