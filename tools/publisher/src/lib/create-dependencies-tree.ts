@@ -1,7 +1,14 @@
 import type { PackageData } from './get-packages';
 
-type DependenciesTree = Map<PackageData, PackageData[]>;
+export type DependenciesTree = Map<PackageData, PackageData[]>;
 
+/**
+ * Creates a map where every package data relates to its dependencies. But we are interesting only
+ * for dependencies from current workspace, so in the value will be these dependencies.
+ * @param publicPackages - dependencies tree will be created only for public packages from workspace
+ * @param allPackages - private dependencies can be used as values
+ * @returns
+ */
 export function createDependenciesTree(
   publicPackages: PackageData[],
   allPackages: PackageData[]

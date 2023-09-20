@@ -11,7 +11,8 @@
     "path": "packages/cli"
   },
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json"
+    "build": "tsc -p ./tsconfig.build.json",
+    "prepublish": "yarn build"
   },
   "dependencies": {
     "@babel/preset-env": "^7.22.14",
