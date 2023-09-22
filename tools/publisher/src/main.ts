@@ -13,10 +13,25 @@ main();
 
 async function main() {
   const allPackages = await getPackages(cwd());
+  console.log(
+    'Received all packages in workspaces:\n',
+    allPackages.map((pack) => pack.packageJson.name)
+  );
+
   const publicPackages = filterPublic(allPackages);
+  console.log(
+    'Filtered only public packages:\n',
+    publicPackages.map((pack) => pack.packageJson.name)
+  );
+
   const dependenciesTree = createDependenciesTree(publicPackages, allPackages);
+  console.log('Created dependencies tree');
+
   const affectedFiles = getAffectedFiles();
+  console.log('Affected files from the main branch:\n', affectedFiles);
+
   const affectedPackages = filterAffectedPackages(dependenciesTree, affectedFiles);
+  console.log('Filter only affected packages');
 
   if (!affectedPackages.size) {
     console.log('There are no changes in affected packages');
@@ -24,7 +39,10 @@ async function main() {
   }
 
   const commits = getCommits();
+  console.log('Recieved commits:\n', commits);
+
   const versionType = resolveVersionType(commits);
+  console.log('New version resolved:', versionType);
 
   if (!versionType) {
     console.log("Commits haven't no one with semver tags");
@@ -33,9 +51,8 @@ async function main() {
 
   for (const packageData of affectedPackages.keys()) {
     publishPackage(packageData, versionType);
+    console.log(`Package ${packageData.packageJson.name} published`);
   }
-
-  console.log(versionType);
 
   // TODO:
   //   + Retrieve the root package.json.
