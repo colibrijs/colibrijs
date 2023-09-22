@@ -18,6 +18,7 @@ export async function getPackages(cwd: string): Promise<PackageData[]> {
   const paths = await glob(patterns, {
     ignore: 'node_modules/**',
     withFileTypes: true,
+    cwd,
   });
 
   return paths.map((filename) => ({

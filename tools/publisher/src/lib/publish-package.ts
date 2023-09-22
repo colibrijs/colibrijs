@@ -11,7 +11,12 @@ export function publishPackage(packageData: PackageData, versionType: VersionTyp
   const name = packageData.packageJson.name as string;
 
   const stdout = execSync(
-    `yarn workspace ${name} publish --new-version ${newVersion} --no-commit-hooks --no-git-tag-version`,
+    `yarn workspace ${name} publish \\
+      --access public \\
+      --new-version ${newVersion} \\
+      --no-commit-hooks \\
+      --no-git-tag-version
+    `,
     { encoding: 'utf-8' }
   );
 

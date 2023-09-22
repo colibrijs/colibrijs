@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { cwd } from 'node:process';
 
 import { createDependenciesTree } from './lib/create-dependencies-tree';
@@ -12,7 +13,9 @@ import { resolveVersionType } from './lib/resolve-version-type';
 main();
 
 async function main() {
-  const allPackages = await getPackages(cwd());
+  console.log('cwd:', cwd());
+
+  const allPackages = await getPackages(path.resolve(cwd(), '../../'));
   console.log(
     'Received all packages in workspaces:\n',
     allPackages.map((pack) => pack.packageJson.name)
