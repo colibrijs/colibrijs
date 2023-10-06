@@ -13,9 +13,10 @@ import { resolveVersionType } from './lib/resolve-version-type';
 main();
 
 async function main() {
-  console.log('cwd:', cwd());
+  const root = path.resolve(cwd(), '../../');
+  console.log('packages root:', root);
 
-  const allPackages = await getPackages(path.resolve(cwd(), '../../'));
+  const allPackages = await getPackages(root);
   console.log(
     'Received all packages in workspaces:\n',
     allPackages.map((pack) => pack.packageJson.name)
@@ -30,7 +31,7 @@ async function main() {
   const dependenciesTree = createDependenciesTree(publicPackages, allPackages);
   console.log('Created dependencies tree');
 
-  const affectedFiles = getAffectedFiles();
+  const affectedFiles = getAffectedFiles(root);
   console.log('Affected files from the main branch:\n', affectedFiles);
 
   const affectedPackages = filterAffectedPackages(dependenciesTree, affectedFiles);

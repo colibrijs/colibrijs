@@ -1,16 +1,15 @@
 import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { cwd } from 'node:process';
 
 /**
  * Returns names of files that were changed from main branch
+ * @param root - path to the workspaces root
  */
-export function getAffectedFiles(): string[] {
+export function getAffectedFiles(root: string): string[] {
   const stdout = execSync(`git diff --name-only ${process.env.FROM} ${process.env.TO}`);
-  const root = cwd();
 
   return stdout
     .toString('utf-8')
     .split('\n')
-    .map((filename) => path.join(root, '../../', path.relative(root, filename)));
+    .map((filename) => path.join(root, path.relative(root, filename)));
 }

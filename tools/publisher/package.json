@@ -8,6 +8,6 @@
   },
   "dependencies": {
     "glob": "^10.3.4",
-    "ts-node": "*"
+    "ts-node": "^10.9.1"
   }
 }

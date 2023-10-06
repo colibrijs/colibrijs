@@ -11,14 +11,17 @@ export interface PackageData {
   packageJson: Record<string, unknown>;
 }
 
-/** Returns array with information about packages */
-export async function getPackages(cwd: string): Promise<PackageData[]> {
-  const patterns = await getPackagesGlobPatterns(cwd);
+/**
+ * Returns array with information about packages
+ * @param root - path to the workspaces root
+ */
+export async function getPackages(root: string): Promise<PackageData[]> {
+  const patterns = await getPackagesGlobPatterns(root);
 
   const paths = await glob(patterns, {
     ignore: 'node_modules/**',
     withFileTypes: true,
-    cwd,
+    cwd: root,
   });
 
   return paths.map((filename) => ({
@@ -27,13 +30,16 @@ export async function getPackages(cwd: string): Promise<PackageData[]> {
   }));
 }
 
-/** Returns array of glob patterns to all package.json files */
-async function getPackagesGlobPatterns(cwd: string): Promise<string[]> {
+/**
+ * Returns array of glob patterns to all package.json files
+ * @param root - path to the workspaces root
+ */
+async function getPackagesGlobPatterns(root: string): Promise<string[]> {
   interface PackageJson {
     workspaces?: string[] | Record<'packages', string[]>;
   }
 
-  const filename = path.resolve(cwd, './package.json');
+  const filename = path.resolve(root, './package.json');
   const packageJson: PackageJson = JSON.parse(await fs.readFile(filename, 'utf-8'));
 
   if (!packageJson.workspaces) {
