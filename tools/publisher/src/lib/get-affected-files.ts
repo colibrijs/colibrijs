@@ -11,5 +11,5 @@ export function getAffectedFiles(root: string): string[] {
   return stdout
     .toString('utf-8')
     .split('\n')
-    .map((filename) => path.join(root, path.relative(root, filename)));
+    .map((filename) => path.join(root, filename));
 }

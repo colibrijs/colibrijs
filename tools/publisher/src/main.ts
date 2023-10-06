@@ -57,28 +57,4 @@ async function main() {
     publishPackage(packageData, versionType);
     console.log(`Package ${packageData.packageJson.name} published`);
   }
-
-  // TODO:
-  //   + Retrieve the root package.json.
-  //   + Retrieve all package.json files listed in package.workspaces.
-  //   + Filter to keep only those without "private: true" and save them in the "public" list.
-  //   + Filter the original array to keep only those workspaces that are either in the "public" list or are dependencies of packages in the "public" list. This should result in a tree structure where "public" dependencies are the roots and others are the leaves.
-  //   + Get the git diff.
-  //   + Determine if there are changes in public packages or their dependencies.
-  //     Note: If the root package.json is modified, it means all public packages have changed.
-  //   + If there are no changes, terminate the algorithm.
-  //   + Obtain a list of commits.
-  //   + For each modified public package, determine a new version:
-  //      - If there are fixes among them, increment the version by patch.
-  //      - If there are new features (feats), increment the version by minor.
-  //      - If there are BREAKING CHANGES, increment the version by major.
-  //   + get current packages version
-  //   + update package.json - set new version
-  //   + publish new versions
-
-  // TODO:
-  // - support deep dependencies. Imagine that package A is public and it depends from package B,
-  //   that depends from package C. If we have some changes in package C, package A must be published.
-  // - detect changes in the root package.json
-  // - resolve version for each package diferrently
 }

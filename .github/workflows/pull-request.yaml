@@ -12,137 +12,137 @@ on:
       - synchronize
 
 jobs:
-  # test:
-  #   if: github.event.action != 'closed'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 18
-  #         cache: yarn
-  #     - name: Install dependencies
-  #       run: |
-  #         yarn install --frozen-lockfile --ignore-scripts
-  #         npx playwright install
-  #     - name: Lint code
-  #       run: yarn lint
-  #     - if: github.event_name == 'pull_request'
-  #       name: Validate commits in pull request
-  #       run: yarn commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
-  #     - name: Run tests
-  #       run: yarn test
-  #     - name: Build storybook
-  #       run: yarn workspace @colibrijs/core build
-  #     - name: Test interactions
-  #       run: yarn test:interactions
-  #     - name: Upload storybook to artifact
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: storybook
-  #         path: ./packages/core/storybook-static
+  test:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile --ignore-scripts
+          npx playwright install
+      - name: Lint code
+        run: yarn lint
+      - if: github.event_name == 'pull_request'
+        name: Validate commits in pull request
+        run: yarn commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
+      - name: Run tests
+        run: yarn test
+      - name: Build storybook
+        run: yarn workspace @colibrijs/core build
+      - name: Test interactions
+        run: yarn test:interactions
+      - name: Upload storybook to artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: storybook
+          path: ./packages/core/storybook-static
 
-  # deploy-storybook:
-  #   if: github.event.action != 'closed'
-  #   needs: test
-  #   uses: ./.github/workflows/deploy-storybook.yaml
-  #   secrets: inherit
-  #   permissions:
-  #     contents: read
-  #     pages: write
-  #     id-token: write
+  deploy-storybook:
+    if: github.event.action != 'closed'
+    needs: test
+    uses: ./.github/workflows/deploy-storybook.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
-  # remove-storybook:
-  #   if: github.event.action == 'closed'
-  #   uses: ./.github/workflows/remove-storybook.yaml
-  #   secrets: inherit
-  #   permissions:
-  #     contents: read
-  #     pages: write
-  #     id-token: write
+  remove-storybook:
+    if: github.event.action == 'closed'
+    uses: ./.github/workflows/remove-storybook.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
-  # deploy:
-  #   if: github.event.action != 'closed'
-  #   needs: test
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     packages: write
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 18
-  #         cache: yarn
-  #     - name: Install dependencies
-  #       run: yarn install --frozen-lockfile --ignore-scripts
-  #     - name: Build cms and app
-  #       run: yarn workspace @colibrijs/cms build && yarn workspace @colibrijs/app build
-  #     - name: Install only production dependencies
-  #       run: yarn install --frozen-lockfile --ignore-scripts --production
-  #     - name: Save metadata about deployment
-  #       uses: ./.github/workflows/deployment-metadata
-  #       id: metadata
-  #     - name: Login in to the container registry
-  #       uses: docker/login-action@v2
-  #       with:
-  #         registry: ghcr.io
-  #         username: ${{ github.repository_owner }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
-  #     - name: Extract metadata (tags, labels) for Docker
-  #       id: docker-meta
-  #       uses: docker/metadata-action@v4
-  #       with:
-  #         images: ghcr.io/${{ github.repository_owner }}/colibrijs
-  #     - name: Build and push Docker image
-  #       uses: docker/build-push-action@v4
-  #       with:
-  #         context: .
-  #         push: true
-  #         tags: ${{ steps.docker-meta.outputs.tags }}
-  #         labels: ${{ steps.docker-meta.outputs.labels }}
-  #     - uses: ./.github/workflows/setup-kubernetes
-  #       with:
-  #         cluster-url: ${{ secrets.CLUSTER_URL }}
-  #     - name: Deploy image to kubernetes cluster
-  #       run: |
-  #         helm upgrade ${{ steps.metadata.outputs.release }} kubernetes \
-  #           --namespace ${{ steps.metadata.outputs.namespace }} \
-  #           --create-namespace \
-  #           --install \
-  #           --wait \
-  #           --timeout 3m0s \
-  #           --set image=${{ steps.docker-meta.outputs.tags }}
+  deploy:
+    if: github.event.action != 'closed'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Build cms and app
+        run: yarn workspace @colibrijs/cms build && yarn workspace @colibrijs/app build
+      - name: Install only production dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts --production
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
+      - name: Login in to the container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: docker-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/colibrijs
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
+      - uses: ./.github/workflows/setup-kubernetes
+        with:
+          cluster-url: ${{ secrets.CLUSTER_URL }}
+      - name: Deploy image to kubernetes cluster
+        run: |
+          helm upgrade ${{ steps.metadata.outputs.release }} kubernetes \
+            --namespace ${{ steps.metadata.outputs.namespace }} \
+            --create-namespace \
+            --install \
+            --wait \
+            --timeout 3m0s \
+            --set image=${{ steps.docker-meta.outputs.tags }}
 
-  # remove-deployment:
-  #   if: github.event.action == 'closed'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     packages: write
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Save metadata about deployment
-  #       uses: ./.github/workflows/deployment-metadata
-  #       id: metadata
-  #     - name: Delete docker image
-  #       uses: bots-house/ghcr-delete-image-action@v1.1.0
-  #       with:
-  #         owner: ${{ github.repository_owner }}
-  #         name: colibrijs
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-  #         tag: pr-${{ github.event.pull_request.number }}
-  #     - name: Setup kubernetes
-  #       uses: ./.github/workflows/setup-kubernetes
-  #       with:
-  #         cluster-url: ${{ secrets.CLUSTER_URL }}
-  #     - name: Delete deployment related to current pull request
-  #       run: helm uninstall ${{ steps.metadata.outputs.release }} --namespace ${{ steps.metadata.outputs.namespace }}
-  #     - name: Delete kubernetes namespace
-  #       run: kubectl delete namespace ${{ steps.metadata.outputs.namespace }} --wait=false
+  remove-deployment:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
+      - name: Delete docker image
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          owner: ${{ github.repository_owner }}
+          name: colibrijs
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: pr-${{ github.event.pull_request.number }}
+      - name: Setup kubernetes
+        uses: ./.github/workflows/setup-kubernetes
+        with:
+          cluster-url: ${{ secrets.CLUSTER_URL }}
+      - name: Delete deployment related to current pull request
+        run: helm uninstall ${{ steps.metadata.outputs.release }} --namespace ${{ steps.metadata.outputs.namespace }}
+      - name: Delete kubernetes namespace
+        run: kubectl delete namespace ${{ steps.metadata.outputs.namespace }} --wait=false
 
   publish-packages:
-    # needs: test
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -160,7 +160,7 @@ jobs:
       - name: Login to NPM
         run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
       - name: Publish Packages
-        run: yarn workspace @colibrijs/publisher start --cwd .
+        run: yarn workspace @colibrijs/publisher start
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           FROM: ${{ github.event.pull_request.base.sha }}
