@@ -142,7 +142,7 @@ jobs:
         run: kubectl delete namespace ${{ steps.metadata.outputs.namespace }} --wait=false
 
   publish-packages:
-    needs: test
+    if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     permissions:
       packages: write
