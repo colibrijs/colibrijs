@@ -4,6 +4,9 @@ env:
   node: true
 extends:
   - eslint:recommended
+  - plugin:react/recommended
+  - plugin:react-hooks/recommended
+  - plugin:react-perf/recommended
   - airbnb-base
   - plugin:@typescript-eslint/recommended
   - plugin:import/recommended
@@ -22,6 +25,8 @@ plugins:
 settings:
   import/resolver:
     typescript: {}
+  react:
+    version: detect
 rules:
   class-methods-use-this: off
   lines-between-class-members: off
@@ -52,6 +57,7 @@ rules:
       - '**/*.stories.ts'
       - '**/*.spec.ts'
   import/prefer-default-export: off
+  react/jsx-boolean-value: error
 overrides:
   - files: ['*.spec.ts']
     plugins: ['jest']
