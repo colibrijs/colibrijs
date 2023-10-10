@@ -77,8 +77,8 @@ jobs:
           cache: yarn
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
-      - name: Build cms and app
-        run: yarn workspace @colibrijs/cms build && yarn workspace @colibrijs/app build
+      - name: Build packages
+        run: yarn workspace @colibrijs/api build && yarn workspace @colibrijs/cms build && yarn workspace @colibrijs/app build
       - name: Install only production dependencies
         run: yarn install --frozen-lockfile --ignore-scripts --production
       - name: Save metadata about deployment

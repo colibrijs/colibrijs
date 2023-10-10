@@ -1,4 +1,5 @@
 # yarn install --frozen-lockfile --ignore-scripts
+# yarn workspace @colibrijs/api build
 # yarn workspace @colibrijs/cms build
 # yarn workspace @colibrijs/app build
 # yarn install --frozen-lockfile --ignore-scripts --production
