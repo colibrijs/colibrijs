@@ -58,7 +58,7 @@ describe(getFederationPluginOptions.name, () => {
     });
   });
 
-  it('filename matches the pattern "./${package.name}/remote.${platform}.js"', () => {
+  it('filename matches the pattern "./#{package.name}/remote.#{platform}.js"', () => {
     expect.assertions(1);
 
     const packageJson: PackageJson = { ...defaultPackageJson, name: '@colibrijs/example' };
