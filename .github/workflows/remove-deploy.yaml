@@ -1,0 +1,30 @@
+name: Remove deploy
+on: workflow_call
+
+concurrency:
+  group: "deploy"
+  cancel-in-progress: false
+
+jobs:
+  remove-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
+      - name: Delete docker image
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          owner: ${{ github.repository_owner }}
+          name: colibrijs
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: pr-${{ github.event.pull_request.number }}
+      - name: Setup kubernetes
+        uses: ./.github/workflows/setup-kubernetes
+        with:
+          cluster-url: ${{ secrets.CLUSTER_URL }}
+      - name: Delete deployment related to current pull request
+        run: helm uninstall ${{ steps.metadata.outputs.release }} --namespace ${{ steps.metadata.outputs.namespace }}
+      - name: Delete kubernetes namespace
+        run: kubectl delete namespace ${{ steps.metadata.outputs.namespace }} --wait=false

@@ -22,6 +22,7 @@
     "lint:duplicates": "yarn-deduplicate --list --fail",
     "lint:editorconfig": "editorconfig-checker",
     "lint:ts": "yarn tsc -noEmit && eslint ./packages/*/src/",
+    "prepare": "yarn husky install",
     "pre-commit": "yarn lint:last-commit && yarn lint:ts",
     "postinstall": "yarn-deduplicate",
     "start:api": "yarn workspace @colibrijs/api start",
