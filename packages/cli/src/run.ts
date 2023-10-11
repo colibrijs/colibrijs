@@ -2,6 +2,7 @@ import { cwd } from 'node:process';
 import { webpack, type MultiCompiler } from 'webpack';
 import WebpackDevServer, { type Configuration as WDSConfiguration } from 'webpack-dev-server';
 
+import { logger } from './console-logger';
 import { readPackageJson } from './lib/read-package-json';
 import type { Settings } from './types';
 import { getWebpackConfig } from './webpack.config';
@@ -47,9 +48,9 @@ function runDev(compiler: MultiCompiler) {
   const server = new WebpackDevServer(config, compiler);
   server.listen(config.port!, config.host!, (error) => {
     if (error) {
-      console.error(error);
+      logger.error(error);
     } else {
-      console.log(`components has been started on the port ${config.port}`);
+      logger.log(`components has been started on the port ${config.port}`);
     }
   });
 }
@@ -60,12 +61,12 @@ function runDev(compiler: MultiCompiler) {
 function build(compiler: MultiCompiler) {
   compiler.run((error, stats) => {
     if (error) {
-      console.error(error);
+      logger.error(error);
     }
 
     if (stats) {
       const statsStr = stats.toString({ colors: true });
-      console.log(statsStr);
+      logger.log(statsStr);
     }
   });
 }

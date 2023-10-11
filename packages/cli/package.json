@@ -22,5 +22,8 @@
     "webpack": "^5.88.2",
     "webpack-dev-server": "^4.15.1",
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.6.4"
   }
 }
