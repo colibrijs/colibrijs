@@ -56,8 +56,6 @@ jobs:
         run: |
           mkdir -p ./github-pages/${{ steps.metadata.outputs.branch }}/example
           cp -R ./example/dist ./github-pages/${{ steps.metadata.outputs.branch }}/example
-      - name: Log github-pages content
-        run: cd ./github-pages && ls -la
       - name: Upload new github-pages
         uses: actions/upload-pages-artifact@v2
         with:
