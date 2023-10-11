@@ -7,10 +7,8 @@ import { ComponentsService } from './components.service';
 @ApiTags('Components')
 @Controller('components')
 export class ComponentsController {
-  constructor(
-    @Inject(ComponentsService)
-    private readonly componentsService: ComponentsService
-  ) {}
+  @Inject(ComponentsService)
+  private readonly componentsService!: ComponentsService;
 
   @ApiOkResponse({ type: Component })
   @Get(':id')
