@@ -1,4 +1,4 @@
-name: Deploy storybook
+name: Deploy github pages
 on: workflow_call
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
@@ -7,11 +7,8 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  ARTIFACT_NAME: github-pages
-
 jobs:
-  deploy-storybook:
+  deploy-github-pages:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -40,12 +37,17 @@ jobs:
         if: steps.download-artifact.outcome == 'success'
         run: |
           rm ./github-pages/artifact.tar
-          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
+          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
       - name: Download storybook build
         uses: actions/download-artifact@v3
         with:
           name: storybook
           path: ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
+      - name: Download example build
+        uses: actions/download-artifact@v3
+        with:
+          name: example
+          path: ./github-pages/${{ steps.metadata.outputs.branch }}/example
       - name: Upload new github-pages
         uses: actions/upload-pages-artifact@v2
         with:

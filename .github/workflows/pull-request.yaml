@@ -77,44 +77,6 @@ jobs:
           name: storybook
           path: ./packages/core/storybook-static
 
-  deploy-storybook:
-    if: github.event.action != 'closed'
-    needs: test
-    uses: ./.github/workflows/deploy-storybook.yaml
-    secrets: inherit
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-  remove-storybook:
-    if: github.event.action == 'closed'
-    uses: ./.github/workflows/remove-storybook.yaml
-    secrets: inherit
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-  deploy-example:
-    if: github.event.action != 'closed'
-    needs: test
-    uses: ./.github/workflows/deploy-example.yaml
-    secrets: inherit
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-  remove-example:
-    if: github.event.action == 'closed'
-    uses: ./.github/workflows/remove-example.yaml
-    secrets: inherit
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
   deploy:
     if: github.event.action != 'closed'
     uses: ./.github/workflows/deploy.yaml
@@ -129,3 +91,23 @@ jobs:
     permissions:
       packages: write
     uses: ./.github/workflows/remove-deploy.yaml
+
+  deploy-github-pages:
+    if: github.event.action != 'closed'
+    needs: test
+    uses: ./.github/workflows/deploy-github-pages.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+  remove-github-pages:
+    if: github.event.action == 'closed'
+    uses: ./.github/workflows/remove-github-pages.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+

@@ -1,4 +1,4 @@
-name: Remove example
+name: Remove github pages
 on: workflow_call
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
@@ -7,11 +7,8 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-env:
-  ARTIFACT_NAME: github-pages
-
 jobs:
-  remove-example:
+  remove-github-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,7 +34,7 @@ jobs:
         if: steps.download-artifact.outcome == 'success'
         run: |
           rm ./github-pages/artifact.tar
-          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}/example
+          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
       - name: Upload new github-pages
         if: steps.download-artifact.outcome == 'success'
         uses: actions/upload-pages-artifact@v2
