@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import { cwd } from 'node:process';
 import { webpack, type MultiCompiler } from 'webpack';
 import WebpackDevServer, { type Configuration as WDSConfiguration } from 'webpack-dev-server';
@@ -12,10 +13,15 @@ export async function run(mode: 'development' | 'build') {
   const packageJson = await readPackageJson(root);
   const settings: Omit<Settings, 'platform'> = { root, mode };
 
-  const compiler = webpack([
-    getWebpackConfig(packageJson, { ...settings, platform: 'server' }),
-    getWebpackConfig(packageJson, { ...settings, platform: 'client' }),
-  ]);
+  const clientConfig = getWebpackConfig(packageJson, { ...settings, platform: 'client' });
+  const serverConfig = getWebpackConfig(packageJson, { ...settings, platform: 'server' });
+
+  await fs.rm(clientConfig.output?.path as string, {
+    force: true,
+    recursive: true,
+  });
+
+  const compiler = webpack([clientConfig, serverConfig]);
 
   switch (mode) {
     case 'development':

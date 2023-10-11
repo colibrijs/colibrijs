@@ -34,7 +34,7 @@ export function getWebpackConfig(packageJson: PackageJson, settings: Settings): 
 
     output: {
       chunkFormat: 'commonjs',
-      clean: true,
+      clean: false,
       filename: '[name].js',
       // TODO: User can specify the name of output dir
       path: path.resolve(settings.root, './dist/'),
