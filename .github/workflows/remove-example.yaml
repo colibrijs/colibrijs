@@ -1,4 +1,4 @@
-name: Remove storybook
+name: Remove example
 on: workflow_call
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
@@ -11,7 +11,7 @@ env:
   ARTIFACT_NAME: github-pages
 
 jobs:
-  remove-storybook:
+  remove-example:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,7 +37,7 @@ jobs:
         if: steps.download-artifact.outcome == 'success'
         run: |
           rm ./github-pages/artifact.tar
-          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
+          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}/example
       - name: Upload new github-pages
         if: steps.download-artifact.outcome == 'success'
         uses: actions/upload-pages-artifact@v2

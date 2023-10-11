@@ -63,6 +63,25 @@ jobs:
       pages: write
       id-token: write
 
+  deploy-example:
+    if: github.event.action != 'closed'
+    needs: test
+    uses: ./.github/workflows/deploy-example.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+  remove-example:
+    if: github.event.action == 'closed'
+    uses: ./.github/workflows/remove-example.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
   deploy:
     if: github.event.action != 'closed'
     needs: test

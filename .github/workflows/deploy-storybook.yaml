@@ -36,18 +36,18 @@ jobs:
       - name: Extract github-pages archive
         if: steps.download-artifact.outcome == 'success'
         run: tar -xvf ./github-pages/artifact.tar --directory ./github-pages
-      - name: Remove old files for current branch and archive
+      - name: Remove old storybook files for current branch and archive
         if: steps.download-artifact.outcome == 'success'
         run: |
           rm ./github-pages/artifact.tar
-          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
+          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
       - name: Download storybook build
         uses: actions/download-artifact@v3
         with:
           name: storybook
-          path: ./github-pages/${{ steps.metadata.outputs.branch }}
+          path: ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
       - name: Log github-pages content
-        run: cd ./github-pages && ls -la
+        run: cd ./github-pages/issue-31 && ls -la
       - name: Upload new github-pages
         uses: actions/upload-pages-artifact@v2
         with:
