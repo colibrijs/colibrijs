@@ -5,7 +5,7 @@
   "main": "./src/example.jsx",
   "scripts": {
     "build": "yarn colibri build",
-    "dev": "yarn colibri development"
+    "dev": "yarn colibri dev"
   },
   "devDependencies": {
     "@colibrijs/cli": "1.0.0",

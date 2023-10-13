@@ -17,6 +17,10 @@ export function getWebpackConfig(packageJson: PackageJson, settings: Settings): 
     plugins: [createModuleFederationPlugin(packageJson, settings)],
     target: false,
 
+    optimization: {
+      chunkIds: 'named',
+    },
+
     module: {
       rules: [
         {

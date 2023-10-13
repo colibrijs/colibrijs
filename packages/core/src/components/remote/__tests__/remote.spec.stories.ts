@@ -12,13 +12,19 @@ export default {
   title: 'Remote/tests',
 } satisfies Meta<typeof Remote>;
 
-export const Content: Story = {
+export const RendersRemoteComponent: Story = {
   ...Default,
-  name: 'Component has waiting content',
+  name: 'renders remote component',
+  args: {
+    componentName: 'Example',
+    packageName: '@colibrijs/example',
+    src: process.env.EXAMPLE_BUILD_SRC ?? 'http://localhost:3001/',
+    ssr: false,
+    props: {},
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const content = canvas.getByTestId('remote');
-
-    expect(content.textContent).toBe('I am a remote component');
+    const remote = await canvas.findByText('I am an example');
+    await expect(remote).toBeInTheDocument();
   },
 };

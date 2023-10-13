@@ -27,7 +27,7 @@ export function getFederationPluginOptions(
     isServer: settings.platform === 'server',
     name: sanitizedName,
     exposes: {
-      [sanitizedName]: packageJson.main,
+      [`./${sanitizedName}`]: packageJson.main,
     },
     shared: {
       'prop-types': {
