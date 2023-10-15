@@ -6,7 +6,7 @@
   "scripts": {
     "build": "yarn colibri build",
     "dev": "yarn colibri dev",
-    "serve:build": "yarn build && yarn serve ./dist -p 3001 --no-port-switching --no-request-logging"
+    "serve:build": "yarn serve ./dist -p 3001 --no-port-switching --no-request-logging"
   },
   "devDependencies": {
     "@colibrijs/cli": "1.0.0",

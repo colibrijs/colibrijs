@@ -20,6 +20,13 @@ export default {
     name: '@storybook/react-webpack5',
     options: {},
   },
+  env: (config) => ({
+    ...config,
+    EXAMPLE_BUILD_SRC: process.env.EXAMPLE_BUILD_SRC ?? '',
+    REPOSITORY_OWNER: process.env.REPOSITORY_OWNER ?? 'colibrijs',
+    REPOSITORY_NAME: process.env.REPOSITORY_NAME ?? 'colibrijs',
+    BRANCH_NAME: process.env.BRANCH_NAME ?? 'main',
+  }),
   docs: {
     autodocs: 'tag',
   },

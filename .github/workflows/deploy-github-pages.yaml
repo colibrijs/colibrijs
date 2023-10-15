@@ -41,7 +41,7 @@ jobs:
       - name: Download storybook build
         uses: actions/download-artifact@v3
         with:
-          name: storybook
+          name: storybook-github-pages
           path: ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
       - name: Download example build
         uses: actions/download-artifact@v3

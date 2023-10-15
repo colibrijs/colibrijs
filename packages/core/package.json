@@ -7,7 +7,7 @@
     "dev": "storybook dev -p 6006 --disable-telemetry",
     "serve:example": "yarn workspace @colibrijs/example serve:build",
     "serve:storybook": "serve storybook-static -p 6006 --no-port-switching --no-request-logging",
-    "test:interactions": "concurrently -k -s first -n 'serve:storybook,serve:example,test' -c 'magenta,blue' 'yarn serve:storybook' 'yarn serve:example' 'wait-port 6006 && wait-port 3001 && test-storybook'"
+    "test:interactions": "concurrently -k -s first -n 'serve:storybook,serve:example,test' -c 'magenta,blue,green' 'yarn serve:storybook' 'yarn serve:example' 'wait-port 6006 && wait-port 3001 && test-storybook'"
   },
   "dependencies": {
     "@module-federation/utilities": "^3.0.0"
@@ -28,6 +28,7 @@
     "@storybook/testing-library": "^0.2.0",
     "@testing-library/react": "^14.0.0",
     "concurrently": "^8.2.1",
+    "cross-env": "^7.0.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
