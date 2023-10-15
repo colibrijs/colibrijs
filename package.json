@@ -29,7 +29,7 @@
     "start:app": "yarn workspace @colibrijs/app start",
     "start:cms": "yarn workspace @colibrijs/cms start",
     "test": "yarn test:unit",
-    "test:interactions": "yarn workspace @colibrijs/core test",
+    "test:interactions": "yarn workspace @colibrijs/core test:interactions",
     "test:unit": "jest"
   },
   "devDependencies": {

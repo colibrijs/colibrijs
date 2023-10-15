@@ -5,8 +5,9 @@
   "scripts": {
     "build": "storybook build --disable-telemetry",
     "dev": "storybook dev -p 6006 --disable-telemetry",
-    "serve-storybook": "serve storybook-static -p 6006 --no-port-switching --no-request-logging",
-    "test": "concurrently -k -s first -n 'serve,test' -c 'magenta,blue' 'yarn serve-storybook' 'wait-port 6006 && test-storybook'"
+    "serve:example": "yarn workspace @colibrijs/example serve:build",
+    "serve:storybook": "serve storybook-static -p 6006 --no-port-switching --no-request-logging",
+    "test:interactions": "concurrently -k -s first -n 'serve:storybook,serve:example,test' -c 'magenta,blue' 'yarn serve:storybook' 'yarn serve:example' 'wait-port 6006 && wait-port 3001 && test-storybook'"
   },
   "dependencies": {
     "@module-federation/utilities": "^3.0.0"
