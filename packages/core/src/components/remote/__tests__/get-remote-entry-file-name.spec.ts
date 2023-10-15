@@ -10,6 +10,6 @@ describe(getRemoteEntryFileName.name, () => {
 
   it('if ssr is false, returns "remote.client.js"', () => {
     expect.assertions(1);
-    expect(getRemoteEntryFileName(true)).toBe('remote.client.js');
+    expect(getRemoteEntryFileName(false)).toBe('remote.client.js');
   });
 });
