@@ -22,10 +22,9 @@ export default {
   },
   env: (config) => ({
     ...config,
-    EXAMPLE_BUILD_SRC: process.env.EXAMPLE_BUILD_SRC ?? '',
-    REPOSITORY_OWNER: process.env.REPOSITORY_OWNER ?? 'colibrijs',
-    REPOSITORY_NAME: process.env.REPOSITORY_NAME ?? 'colibrijs',
     BRANCH_NAME: process.env.BRANCH_NAME ?? 'main',
+    EXAMPLE_BUILD_SRC: process.env.EXAMPLE_BUILD_SRC ?? '',
+    REPOSITORY: process.env.REPOSITORY ?? 'colibrijs/colibrijs',
   }),
   docs: {
     autodocs: 'tag',

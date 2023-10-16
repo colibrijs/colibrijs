@@ -2,9 +2,9 @@ import { expect } from '@storybook/jest';
 import type { Meta, StoryObj } from '@storybook/react';
 import { within } from '@storybook/testing-library';
 
+import DefaultMeta, { Default } from './remote.stories';
 import { defaultProps } from '../__tests__/test-data';
 import { Remote } from '../remote';
-import DefaultMeta, { Default } from '../remote.stories';
 
 type Story = StoryObj<typeof Remote>;
 

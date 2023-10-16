@@ -10,9 +10,9 @@ export function getExampleBuildSrc(): string {
     return process.env.EXAMPLE_BUILD_SRC;
   }
 
-  const repositoryOwner = process.env.REPOSITORY_OWNER;
-  const repositotyName = process.env.REPOSITORY_NAME;
-  const branchName = process.env.BRANCH_NAME;
+  const repository = process.env.REPOSITORY ?? 'colibrijs/colibrijs';
+  const [repositoryOwner, repositotyName] = repository.split('/');
+  const branchName = process.env.BRANCH_NAME ?? 'main';
 
   return `https://${repositoryOwner}.github.io/${repositotyName}/${branchName}/example/`;
 }

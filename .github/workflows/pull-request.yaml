@@ -25,6 +25,9 @@ jobs:
         run: |
           yarn install --frozen-lockfile --ignore-scripts
           npx playwright install
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
       - name: Build cli
         run: |
           yarn workspace @colibrijs/cli build
@@ -33,6 +36,8 @@ jobs:
         run: yarn workspace @colibrijs/core build
         env:
           EXAMPLE_BUILD_SRC: http://localhost:3001/
+          REPOSITORY: ${{ github.repository }}
+          BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
       - name: Upload storybook for testing to artifact
         uses: actions/upload-artifact@v3
         with:
@@ -41,10 +46,9 @@ jobs:
       - name: Build storybook for github pages
         run: yarn workspace @colibrijs/core build
         env:
-          REPOSITORY_OWNER: ${{ github.repository_owner }}
-          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          REPOSITORY: ${{ github.repository }}
           BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
-      - name: Upload storybook to artifact
+      - name: Upload github pages storybook to artifact
         uses: actions/upload-artifact@v3
         with:
           name: storybook-github-pages
@@ -69,9 +73,6 @@ jobs:
         with:
           node-version: 18
           cache: yarn
-      - name: Save metadata about deployment
-        uses: ./.github/workflows/deployment-metadata
-        id: metadata
       - name: Install dependencies
         run: |
           yarn install --frozen-lockfile --ignore-scripts
@@ -91,7 +92,7 @@ jobs:
       - name: Download storybook for interactions tests
         uses: actions/download-artifact@v3
         with:
-          name: storybook-github-pages
+          name: storybook-testing
           path: ./packages/core/storybook-static/
       - name: Test interactions
         run: yarn test:interactions
