@@ -4,9 +4,10 @@ const jestConfig: JestConfigWithTsJest = {
   reporters: ['default', ['github-actions', { silent: false }]],
   projects: ['api', 'app', 'cli', 'core', 'cms'].map((packageName) => ({
     displayName: `@colibrijs/${packageName}`,
-    testMatch: [`<rootDir>/packages/${packageName}/src/**/*.spec.ts`],
+    testMatch: [`<rootDir>/packages/${packageName}/src/**/*.spec.{ts,tsx}`],
     preset: 'ts-jest/presets/default',
-    testEnvironment: 'node',
+    setupFilesAfterEnv: ['@testing-library/jest-dom'],
+    testEnvironment: 'jsdom',
     transform: {
       '^.+\\.tsx?$': ['ts-jest', {}],
     },

@@ -25,16 +25,33 @@ jobs:
         run: |
           yarn install --frozen-lockfile --ignore-scripts
           npx playwright install
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
       - name: Build cli
         run: |
           yarn workspace @colibrijs/cli build
           yarn install --frozen-lockfile
-      - name: Build storybook
+      - name: Build storybook for interaction tests
         run: yarn workspace @colibrijs/core build
-      - name: Upload storybook to artifact
+        env:
+          EXAMPLE_BUILD_SRC: http://localhost:3001/
+          REPOSITORY: ${{ github.repository }}
+          BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
+      - name: Upload storybook for testing to artifact
         uses: actions/upload-artifact@v3
         with:
-          name: storybook
+          name: storybook-testing
+          path: ./packages/core/storybook-static
+      - name: Build storybook for github pages
+        run: yarn workspace @colibrijs/core build
+        env:
+          REPOSITORY: ${{ github.repository }}
+          BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
+      - name: Upload github pages storybook to artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: storybook-github-pages
           path: ./packages/core/storybook-static
       - name: Build example
         run: yarn workspace @colibrijs/example build
@@ -67,15 +84,18 @@ jobs:
         run: yarn commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
       - name: Run tests
         run: yarn test
-      - name: Build storybook
-        run: yarn workspace @colibrijs/core build
+      - name: Download example build
+        uses: actions/download-artifact@v3
+        with:
+          name: example
+          path: ./example/dist
+      - name: Download storybook for interactions tests
+        uses: actions/download-artifact@v3
+        with:
+          name: storybook-testing
+          path: ./packages/core/storybook-static/
       - name: Test interactions
         run: yarn test:interactions
-      - name: Upload storybook to artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: storybook
-          path: ./packages/core/storybook-static
 
   deploy:
     if: github.event.action != 'closed'
