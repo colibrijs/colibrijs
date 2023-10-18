@@ -15,17 +15,18 @@ describe(createModuleFederationPlugin.name, () => {
   // We have a well-tested function getFederationPluginOptions. For the createModuleFederationPlugin
   // function, it's sufficient to ensure that the ModuleFederationPlugin is created with the
   // parameters returned by getFederationPluginOptions.
-  it('creates an instance of UniversalFederationPlugin with options that returns getFederationPluginOptions', () => {
+  it('creates an instance of NodeFederationPlugin with options that returns getFederationPluginOptions', () => {
     expect.assertions(2);
 
-    const expectedParams = getFederationPluginOptions(defaultPackageJson, defaultSettings);
+    const settings: Settings = { ...defaultSettings, platform: 'server' };
+    const expectedParams = getFederationPluginOptions(defaultPackageJson, settings);
     const expectedResult = { someProperty: 'someValue' };
-    const spyConstructor = jest.spyOn(mf, 'UniversalFederationPlugin');
+    const spyConstructor = jest.spyOn(mf, 'NodeFederationPlugin');
 
     // @ts-expect-error here may be any function. We don't interesting in implementation
     spyConstructor.mockImplementationOnce(jest.fn().mockReturnValue(expectedResult));
 
-    const result = createModuleFederationPlugin(defaultPackageJson, defaultSettings);
+    const result = createModuleFederationPlugin(defaultPackageJson, settings);
 
     expect(spyConstructor).toHaveBeenCalledWith(expectedParams, {});
     expect(result).toStrictEqual(expectedResult);
@@ -54,7 +55,7 @@ describe(getFederationPluginOptions.name, () => {
 
     const options = getFederationPluginOptions(packageJson, defaultSettings);
     expect(options.exposes).toStrictEqual({
-      [`./${sanitizePackageName('@colibrijs/example')}`]: 'index.js',
+      [sanitizePackageName('@colibrijs/example')]: 'index.js',
     });
   });
 
@@ -65,22 +66,6 @@ describe(getFederationPluginOptions.name, () => {
     const settings: Settings = { ...defaultSettings, platform: 'client' };
     const options = getFederationPluginOptions(packageJson, settings);
     expect(options.filename).toBe('./@colibrijs/example/remote.client.js');
-  });
-
-  it('if settings.platform is "client", property "isServer" has value false', () => {
-    expect.assertions(1);
-
-    const settings: Settings = { ...defaultSettings, platform: 'client' };
-    const options = getFederationPluginOptions(defaultPackageJson, settings);
-    expect(options.isServer).toBe(false);
-  });
-
-  it('if settings.platform is "server", property "isServer" has value true', () => {
-    expect.assertions(1);
-
-    const settings: Settings = { ...defaultSettings, platform: 'server' };
-    const options = getFederationPluginOptions(defaultPackageJson, settings);
-    expect(options.isServer).toBe(true);
   });
 
   it('if settings.platform is "client", filename equals "./name/remote.client.js"', () => {
