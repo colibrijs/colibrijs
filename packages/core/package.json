@@ -11,7 +11,7 @@
     "test:interactions": "concurrently -k -s first -n 'serve:storybook,serve:example,test' -c 'magenta,blue,green' 'yarn serve:storybook' 'yarn serve:example' 'wait-port 6006 && wait-port 3001 && test-storybook'"
   },
   "dependencies": {
-    "@module-federation/utilities": "^1.7.0"
+    "@module-federation/utilities": "^3.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.15",

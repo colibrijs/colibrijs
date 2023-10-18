@@ -2140,24 +2140,27 @@
     "@types/mdx" "^2.0.0"
     "@types/react" ">=16"
 
-"@module-federation/node@0.14.0":
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/@module-federation/node/-/node-0.14.0.tgz#414cfb6393c6c14ec54b56f37a1efba67ee2e5e1"
-  integrity sha512-ry46SxNi9QMOR2Z2l0LBh1eL6fOow41AfGF54Ir7oOUaBr4N9RHdR0CTeMCLLtw4dTUO4LmSDh83/vr2AXEpRQ==
+"@module-federation/node@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@module-federation/node/-/node-1.0.7.tgz#789e86ebe4705951b0378b1632567a314156c423"
+  integrity sha512-ZOdY8/qjAV8B8pL/+xf4KqEeQ6aJQoVjgn8IzS5Hk4qqMiow0Sf9EEX69LTI+GIVztVLjS/Q6N2QfS6ghsY1sw==
   dependencies:
-    "@module-federation/utilities" "1.6.0"
-    encoding "0.1.13"
-    node-fetch "2.6.7"
+    "@module-federation/utilities" "2.0.6"
+    encoding "^0.1.13"
+    node-fetch "^2.6.7"
+    webpack-sources "3.2.3"
 
-"@module-federation/utilities@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@module-federation/utilities/-/utilities-1.6.0.tgz#582b9a8a87f3f39b6bf56eb6fa109bb23aa59990"
-  integrity sha512-WB9A18cX9dkUQCnJmOXFn4HdCAN2wcl1z4ZmI6NG31ZV0EvxIBkcdeTd++F4uV6rpVUzNmvUbOTPABN5yT6MsQ==
+"@module-federation/utilities@2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@module-federation/utilities/-/utilities-2.0.6.tgz#c4ce93654385ca6e664506e01d9e73e226d8973f"
+  integrity sha512-2/jfEkdi5U0SZDZMaZrTakhtacXIZib84jOHXrGEw3wQ1x8DfPyOtO7WW/G+DmsEGq4z+OVkMrDQTw+KjHTFNQ==
+  dependencies:
+    webpack-sources "3.2.3"
 
-"@module-federation/utilities@^1.7.0":
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/@module-federation/utilities/-/utilities-1.9.1.tgz#be6ee95a90ca5d26243e4b76c92ee169784231ef"
-  integrity sha512-EVPV90TSK+tSG6R7Kw65w7pRuI2phff8YFIazzGWNViZPRlTYS3c9pZWVPYGiwIz1+96P+yeNp/WQZrkyS8kpA==
+"@module-federation/utilities@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@module-federation/utilities/-/utilities-3.0.0.tgz#659314ff03231964f8c5ac7c36361c7fe8b908d4"
+  integrity sha512-Zqp+6RcuNj/jq5GAfXDDjmMZggFN3U6tOL/obj6KflEQzMVCeYFAl6UzQXdhWR2+K2g/23xuJTQJyqqS8ffUeQ==
 
 "@ndelangen/get-tarball@^3.0.7":
   version "3.0.9"
@@ -6439,7 +6442,7 @@ encodeurl@~1.0.2:
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==
 
-encoding@0.1.13:
+encoding@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.13.tgz#56574afdd791f54a8e9b2785c0582a2d26210fa9"
   integrity sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==
@@ -10320,14 +10323,7 @@ node-fetch-native@^1.0.2:
   resolved "https://registry.yarnpkg.com/node-fetch-native/-/node-fetch-native-1.4.0.tgz#fbe8ac033cb6aa44bd106b5e4fd2b6277ba70fa1"
   integrity sha512-F5kfEj95kX8tkDhUCYdV8dg3/8Olx/94zB8+ZNthFs6Bz31UpUi8Xh40TN3thLwXgrwXry1pEg9lJ++tLWTcqA==
 
-node-fetch@2.6.7:
-  version "2.6.7"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
-  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
-  dependencies:
-    whatwg-url "^5.0.0"
-
-node-fetch@^2, node-fetch@^2.0.0, node-fetch@^2.6.1:
+node-fetch@^2, node-fetch@^2.0.0, node-fetch@^2.6.1, node-fetch@^2.6.7:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
@@ -13491,7 +13487,7 @@ webpack-node-externals@3.0.0:
   resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-3.0.0.tgz#1a3407c158d547a9feb4229a9e3385b7b60c9917"
   integrity sha512-LnL6Z3GGDPht/AigwRh2dvL9PQPFQ8skEpVrWZXLWBYmqcaojHNN0onvHzie6rq7EWKrrBfPYqNEzTJgiwEQDQ==
 
-webpack-sources@^3.2.3:
+webpack-sources@3.2.3, webpack-sources@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.2.3.tgz#2d4daab8451fd4b240cc27055ff6a0c2ccea0cde"
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==

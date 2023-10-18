@@ -8,7 +8,7 @@ export default function PageIndex() {
     <Remote
       componentName="Example"
       packageName="@colibrijs/example"
-      src="http://localhost:3001/"
+      src="https://colibrijs.github.io/colibrijs/main/example/"
       ssr={typeof window === 'undefined'}
       props={props}
     />
