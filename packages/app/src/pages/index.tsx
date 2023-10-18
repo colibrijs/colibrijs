@@ -1,5 +1,16 @@
-import React from 'react';
+import { Remote } from '@colibrijs/core';
+import React, { useMemo } from 'react';
 
 export default function PageIndex() {
-  return <h1>I am an index app page</h1>;
+  const props = useMemo(() => ({}), []);
+
+  return (
+    <Remote
+      componentName="Example"
+      packageName="@colibrijs/example"
+      src="http://localhost:3001/"
+      ssr={typeof window === 'undefined'}
+      props={props}
+    />
+  );
 }

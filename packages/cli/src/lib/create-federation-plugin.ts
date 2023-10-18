@@ -1,19 +1,20 @@
-import { UniversalFederationPlugin } from '@module-federation/node';
+import { NodeFederationPlugin } from '@module-federation/node';
+import { container } from 'webpack';
 
 import { sanitizePackageName } from './sanitize-package-name';
 import type { PackageJson, Settings } from '../types';
 
-type FederationPluginConstructorOptions = ConstructorParameters<
-  typeof UniversalFederationPlugin
->[0];
+type FederationPluginConstructorOptions = ConstructorParameters<typeof NodeFederationPlugin>[0];
 
 /** Creates and returns an instance of ModuleFederationPlugin */
 export function createModuleFederationPlugin(
   packageJson: PackageJson,
   settings: Settings
-): UniversalFederationPlugin {
+): NodeFederationPlugin {
   const options = getFederationPluginOptions(packageJson, settings);
-  return new UniversalFederationPlugin(options, {});
+  return settings.platform === 'server'
+    ? new NodeFederationPlugin(options, {})
+    : (new container.ModuleFederationPlugin(options) as NodeFederationPlugin);
 }
 
 /** Receipts a package Json representation and returns an options for ModuleFederationPlugin */
@@ -24,10 +25,9 @@ export function getFederationPluginOptions(
   const sanitizedName = sanitizePackageName(packageJson.name);
   const options: FederationPluginConstructorOptions = {
     filename: `./${packageJson.name}/remote.${settings.platform}.js`,
-    isServer: settings.platform === 'server',
     name: sanitizedName,
     exposes: {
-      [`./${sanitizedName}`]: packageJson.main,
+      [`${sanitizedName}`]: packageJson.main,
     },
     shared: {
       'prop-types': {

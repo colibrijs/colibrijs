@@ -1,11 +1,11 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import * as mfUtilities from '@module-federation/utilities';
 import { act, render } from '@testing-library/react';
 import React from 'react';
 
 import { defaultProps } from './test-data';
 import { sanitizePackageName } from '../../../utils/sanitize-package-name';
 import { Remote, Props } from '../remote';
+import * as importRemoteModule from '../utils/import-remote';
 
 const TestComponent = () => <div />;
 
@@ -13,7 +13,7 @@ describe('Remote - integration sanitizePackageName', () => {
   it('calls importRemote with parameter "module" that is result of sanitizePackageName', async () => {
     // Arrange
     const importRemoteSpy = jest
-      .spyOn(mfUtilities, 'importRemote')
+      .spyOn(importRemoteModule, 'importRemote')
       .mockResolvedValueOnce({ TestComponent });
 
     const props: Props = {
@@ -34,7 +34,7 @@ describe('Remote - integration sanitizePackageName', () => {
   it('calls importRemote with parameter "scope" that is result of sanitizePackageName', async () => {
     // Arrange
     const importRemoteSpy = jest
-      .spyOn(mfUtilities, 'importRemote')
+      .spyOn(importRemoteModule, 'importRemote')
       .mockResolvedValueOnce({ TestComponent });
 
     const props: Props = {
