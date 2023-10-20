@@ -1,5 +1,14 @@
 import React from 'react';
 
-export function Example() {
-  return <h1>I am an example</h1>;
+const style = { paddingLeft: 20 };
+
+export function Example(props) {
+  const { children, text } = props;
+
+  return (
+    <div style={style}>
+      {text}
+      {children}
+    </div>
+  );
 }

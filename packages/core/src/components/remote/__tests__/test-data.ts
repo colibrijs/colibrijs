@@ -22,5 +22,5 @@ export const defaultProps: Props = {
   packageName: '@colibrijs/example',
   src: getExampleBuildSrc(),
   ssr: false,
-  props: {},
+  props: { text: 'I am an example' },
 };
