@@ -1,1 +1,2 @@
-export { Remote, type Props as RemoteProps } from './components/remote/remote';
+export * from './components/page';
+export * from './components/remote';

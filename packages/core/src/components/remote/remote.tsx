@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { type PropsWithChildren, Suspense, lazy } from 'react';
 
 import { getPackageUrl } from './utils/get-package-url';
 import { getRemoteEntryFileName } from './utils/get-remote-entry-file-name';
@@ -7,7 +7,7 @@ import { sanitizePackageName } from '../../utils/sanitize-package-name';
 
 type UnknownProps = Record<string, unknown>;
 
-export interface Props<T extends UnknownProps = UnknownProps> {
+export type Props<T extends UnknownProps = UnknownProps> = PropsWithChildren<{
   /** Component's name */
   componentName: string;
 
@@ -22,13 +22,13 @@ export interface Props<T extends UnknownProps = UnknownProps> {
 
   /** Is component rendering on the server side */
   ssr: boolean;
-}
+}>;
 
 /**
  * Component that shows component from remote federation module
  */
 export function Remote<T extends UnknownProps = UnknownProps>(props: Props<T>) {
-  const { componentName, packageName, props: componentProps, src, ssr } = props;
+  const { children, componentName, packageName, props: componentProps, src, ssr } = props;
 
   const Component = lazy(() => {
     return importRemote({
@@ -41,7 +41,7 @@ export function Remote<T extends UnknownProps = UnknownProps>(props: Props<T>) {
 
   return (
     <Suspense fallback="Loading...">
-      <Component {...componentProps} />
+      <Component {...componentProps}>{children}</Component>
     </Suspense>
   );
 }
