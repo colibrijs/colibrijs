@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "build": "yarn tsc -p ./tsconfig.build.json",
-    "dev": "yarn migration:run && nest start --watch",
-    "prestart": "yarn migration:run",
+    "dev": "yarn migrations:run && nest start --watch",
+    "prestart": "yarn migrations:run",
     "start": "node ./dist/main.js",
     "migration:create": "typeorm-ts-node-esm migration:create",
     "migration:generate": "typeorm-ts-node-esm migration:generate --dataSource ./src/data-source.ts",
-    "migration:run": "typeorm-ts-node-esm migration:run --dataSource ./src/data-source.ts --transaction none",
-    "migration:revert": "typeorm-ts-node-esm migration:revert --dataSource ./src/data-source.ts --transaction none"
+    "migrations:run": "typeorm-ts-node-esm migration:run --dataSource ./src/data-source.ts --transaction none",
+    "migrations:revert": "typeorm-ts-node-esm migration:revert --dataSource ./src/data-source.ts --transaction none"
   },
   "dependencies": {
     "@fastify/static": "^6.10.2",
