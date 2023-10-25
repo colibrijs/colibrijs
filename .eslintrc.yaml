@@ -71,3 +71,7 @@ overrides:
       - ./packages/*/src/**/*.stories.{ts,tsx}
     rules:
       import/no-default-export: off
+  - files:
+      - ./packages/api/**/*.entity.ts
+    rules:
+      max-classes-per-file: 'off'

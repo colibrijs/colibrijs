@@ -1,7 +1,7 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Query } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { Component } from './component.entity';
+import { ConsturctorOptions, Component, FindOptions } from './component.entity';
 import { ComponentsService } from './components.service';
 
 @ApiTags('Components')
@@ -10,9 +10,27 @@ export class ComponentsController {
   @Inject(ComponentsService)
   private readonly componentsService!: ComponentsService;
 
+  @ApiCreatedResponse({ type: Component })
+  @Post()
+  create(@Body() options: ConsturctorOptions): Promise<Component> {
+    return this.componentsService.create(options);
+  }
+
+  @ApiOkResponse({ type: [Component] })
+  @Get()
+  findBy(@Query() options: FindOptions): Promise<Component[]> {
+    return this.componentsService.findBy(options);
+  }
+
   @ApiOkResponse({ type: Component })
   @Get(':id')
-  findById(@Param('id') id: string): Promise<Component | null> {
+  findById(@Param('id') id: string): Promise<Component> {
     return this.componentsService.findById(id);
+  }
+
+  @ApiOkResponse({ type: Component })
+  @Delete(':id')
+  remove(@Param('id') id: string): Promise<Component> {
+    return this.componentsService.remove(id);
   }
 }

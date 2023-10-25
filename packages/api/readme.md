@@ -10,8 +10,8 @@ migration class. It is recommended.
 
 ### Commands
 
-- **migrations:create** *&lt;path&gt;* - create a new empty migration
-- **migrations:generate** *./src/migrations/transaction-name* - generate migration from source code
+- **migration:create** *&lt;path&gt;* - create a new empty migration
+- **migration:generate** *./src/migrations/transaction-name* - generate migration from source code
 - **migrations:run** - run migrations
 - **migrations:revert** - revert the changes
 
