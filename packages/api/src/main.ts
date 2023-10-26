@@ -7,7 +7,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './modules/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
+    cors: true,
+  });
+
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Colibrijs API')
     .setExternalDoc('OpenAPI schema', './swagger-json')
