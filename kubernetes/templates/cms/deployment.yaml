@@ -32,8 +32,7 @@ spec:
               value: cms
             - name: PORT
               value: '3001'
-          envFrom:
-            - configMapRef:
-                name: configmap
+            - name: API_BASE_URL
+              value: api.{{ .Release.Namespace.svc.cluster.local }}
           ports:
             - containerPort: 3001
