@@ -1,3 +1,5 @@
+'use client';
+
 import { api, type Component } from '@colibrijs/api-client';
 import { useQuery } from '@tanstack/react-query';
 import { Button, Space, Table, type TableColumnsType } from 'antd';

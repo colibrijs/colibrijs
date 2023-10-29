@@ -67,7 +67,7 @@ overrides:
         - error
         - ignoreTypeOfDescribeName: true
   - files:
-      - ./packages/{app,cms}/src/pages/**/*.{ts,tsx}
+      - ./packages/{app,cms}/src/{app,pages}/**/*.{ts,tsx}
       - ./packages/*/src/**/*.stories.{ts,tsx}
     rules:
       import/no-default-export: off
