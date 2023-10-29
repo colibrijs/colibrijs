@@ -33,6 +33,6 @@ spec:
             - name: PORT
               value: '3002'
             - name: API_BASE_URL
-              value: api.{{ .Release.Namespace.svc.cluster.local }}
+              value: api.{{ .Release.Namespace }}.svc.cluster.local
           ports:
             - containerPort: 3002
