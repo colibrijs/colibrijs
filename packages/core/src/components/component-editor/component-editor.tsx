@@ -7,7 +7,7 @@ import type { RemoteProps } from '../remote';
 
 type ComponentData = Pick<RemoteProps, 'componentName' | 'packageName' | 'src'>;
 
-interface Props {
+export interface Props {
   opened?: boolean;
   onClose: () => void;
 }
