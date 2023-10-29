@@ -11,3 +11,5 @@ const config: ApiConfig = {
 export const api = {
   components: new Components(config),
 };
+
+export type { Component } from '../generated/data-contracts';
