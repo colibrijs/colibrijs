@@ -5,22 +5,17 @@ export class ComponentsBase1698262164083 implements MigrationInterface {
   readonly transaction = true;
 
   async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('ALTER TABLE "components" RENAME COLUMN "name" TO "componentName"');
+
     await queryRunner.query(
-      `ALTER TABLE "components"
-        RENAME COLUMN "name" to "componentName",
-        ADD "packageName" text NOT NULL,
-        ADD "src" text NOT NULL;
-      `
+      'ALTER TABLE "components" ADD COLUMN "packageName" text NOT NULL, ADD COLUMN "src" text NOT NULL'
     );
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query('ALTER TABLE "components" RENAME COLUMN "componentName" TO "name"');
     await queryRunner.query(
-      `ALTER TABLE "components"
-        RENAME COLUMN "componentName" to "name",
-        DROP COLUMN "packageName",
-        DROP COLUMN "src";
-      `
+      'ALTER TABLE "components" DROP COLUMN "packageName", DROP COLUMN "src"'
     );
   }
 }

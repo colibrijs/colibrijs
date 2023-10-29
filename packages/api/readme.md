@@ -30,5 +30,15 @@ For example, if you want to generate a TypeScript package with an API client, yo
 command, and the API client will be ready for use:
 
 ```bash
-npx swagger-typescript-api -p INSERT-URL-TO-OPENAPI-HERE --extract-request-params --extract-request-body --extract-response-body --extract-response-error --patch
+npx swagger-typescript-api \
+  --clean-output \
+  --extract-request-params \
+  --extract-request-body \
+  --extract-response-body \
+  --extract-response-error \
+  --name "colibrijs-api" \
+  --output ./src \
+  --patch \
+  --path INSERT-URL-TO-OPENAPI-HERE \
+  --unwrap-response-data
 ```

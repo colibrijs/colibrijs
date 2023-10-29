@@ -11,7 +11,10 @@
     "test:interactions": "concurrently -k -s first -n 'serve:storybook,serve:example,test' -c 'magenta,blue,green' 'yarn serve:storybook' 'yarn serve:example' 'wait-port 6006 && wait-port 3001 && test-storybook'"
   },
   "dependencies": {
-    "@module-federation/utilities": "^3.0.0"
+    "@colibrijs/api-client": "^1.0.0",
+    "@module-federation/utilities": "^3.0.0",
+    "@tanstack/react-query": "^5.0.5",
+    "antd": "^5.10.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.15",
@@ -35,6 +38,7 @@
     "react-dom": "^18.2.0",
     "serve": "^14.2.1",
     "storybook": "^7.4.0",
+    "storybook-addon-mock": "^4.3.0",
     "wait-port": "^1.0.4"
   },
   "peerDependencies": {
