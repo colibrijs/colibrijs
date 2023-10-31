@@ -6,21 +6,21 @@ import { Component } from '../components';
 @Entity({ name: 'content' })
 export class Element {
   @PrimaryGeneratedColumn('uuid')
-  @ApiProperty({ type: 'string', required: true })
+  @ApiProperty({ type: String, required: true })
   id!: string;
 
-  @OneToOne(() => Component)
+  @OneToOne(() => Component, { eager: true, nullable: false })
   @JoinColumn()
   @ApiProperty({ type: () => Component, required: true })
   component!: Component;
 
   @Column({ type: 'simple-json' })
-  @ApiProperty({ type: 'object', required: true })
+  @ApiProperty({ type: Object, required: true })
   props!: object;
 }
 
-export class ConstructorOptions extends OmitType(Element, ['id', 'component']) {
-  @ApiProperty({ type: 'string, required: true' })
+export class ElementConstructorOptions extends OmitType(Element, ['id', 'component']) {
+  @ApiProperty({ type: String, required: true })
   componentId!: string;
 }
 

@@ -1,15 +1,15 @@
-import { Components } from '../generated/Components';
-import type { ApiConfig } from '../generated/http-client';
-
-const config: ApiConfig = {
-  baseUrl: process.env.API_BASE_URL ?? 'http://api.colibrijs.io',
-  baseApiParams: {
-    format: 'json',
-  },
-};
+import { components } from './endpoints/components';
+import { content } from './endpoints/content';
 
 export const api = {
-  components: new Components(config),
+  components,
+  content,
 };
 
-export type { Component } from '../generated/data-contracts';
+export type {
+  Component,
+  ComponentConstructorOptions,
+  ComponentsFindOptions,
+} from './endpoints/components';
+
+export type { Element, ContentFindOptions, ElementConstructorOptions } from './endpoints/content';

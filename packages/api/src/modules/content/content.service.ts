@@ -1,14 +1,14 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 
-import { Element, type ConstructorOptions, type FindOptions } from './element.entity';
+import { Element, type ElementConstructorOptions, type FindOptions } from './element.entity';
 
 export class ContentService {
   @InjectRepository(Element)
   private readonly content!: Repository<Element>;
 
   /** Creates content with specified elements */
-  create(elementsData: ConstructorOptions[]): Promise<Element[]> {
+  create(elementsData: ElementConstructorOptions[]): Promise<Element[]> {
     return this.content.save(this.content.create(elementsData));
   }
 
