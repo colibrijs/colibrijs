@@ -3,7 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
-import { ComponentsModule } from './components/index';
+import { ComponentsModule } from './components';
+import { ContentModule } from './content';
 import { dataSource } from '../data-source';
 
 @Module({
@@ -12,6 +13,7 @@ import { dataSource } from '../data-source';
     ConfigModule.forRoot({ envFilePath: '.env' }),
     TypeOrmModule.forRoot(dataSource.options),
     ComponentsModule,
+    ContentModule,
   ],
 })
 export class AppModule {}

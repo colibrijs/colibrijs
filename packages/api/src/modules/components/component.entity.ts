@@ -22,4 +22,4 @@ export class Component {
 
 export class FindOptions extends PartialType(Component) {}
 
-export class ConsturctorOptions extends OmitType(Component, ['id']) {}
+export class ConstructorOptions extends OmitType(Component, ['id']) {}
