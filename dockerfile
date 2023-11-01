@@ -5,7 +5,7 @@
 # yarn install --frozen-lockfile --ignore-scripts --production
 # docker build . -t colibrijs
 
-FROM node:18.17.1-alpine
+FROM node:18.18.2-alpine
 
 WORKDIR /usr/colibrijs
 

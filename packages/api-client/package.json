@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "private": "true",
   "main": "./src/api.ts",
-  "scripts": {
-    "generate": "swagger-typescript-api --path \"http://localhost:3000/swagger-json\" --modular --clean-output --extract-request-params --extract-request-body --extract-response-body --extract-response-error --output ./generated --patch --unwrap-response-data"
-  },
-  "devDependencies": {
-    "swagger-typescript-api": "^13.0.3"
+  "dependencies": {
+    "axios": "^1.6.0"
   }
 }

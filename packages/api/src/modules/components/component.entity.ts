@@ -4,22 +4,22 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'components' })
 export class Component {
   @PrimaryGeneratedColumn('uuid')
-  @ApiProperty({ type: 'string', required: true })
+  @ApiProperty({ type: String, required: true })
   id!: string;
 
   @Column({ type: 'text', nullable: false })
-  @ApiProperty({ type: 'string', required: true })
+  @ApiProperty({ type: String, required: true })
   componentName!: string;
 
   @Column({ type: 'text', nullable: false })
-  @ApiProperty({ type: 'string', required: true })
+  @ApiProperty({ type: String, required: true })
   packageName!: string;
 
   @Column({ type: 'text', nullable: false })
-  @ApiProperty({ type: 'string', required: true })
+  @ApiProperty({ type: String, required: true })
   src!: string;
 }
 
 export class FindOptions extends PartialType(Component) {}
 
-export class ConsturctorOptions extends OmitType(Component, ['id']) {}
+export class ConstructorOptions extends OmitType(Component, ['id']) {}

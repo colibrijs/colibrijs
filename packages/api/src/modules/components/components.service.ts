@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 
 import { Component } from './component.entity';
-import type { ConsturctorOptions, FindOptions } from './component.entity';
+import type { ConstructorOptions, FindOptions } from './component.entity';
 
 @Injectable()
 export class ComponentsService {
@@ -11,7 +11,7 @@ export class ComponentsService {
   private readonly components!: Repository<Component>;
 
   /** Creates component with specified options */
-  create(options: ConsturctorOptions): Promise<Component> {
+  create(options: ConstructorOptions): Promise<Component> {
     return this.components.save(this.components.create(options));
   }
 
@@ -28,7 +28,7 @@ export class ComponentsService {
   /** Removes component with specified id */
   async remove(id: string): Promise<Component> {
     const component = await this.findById(id);
-    this.components.delete({ id });
+    await this.components.delete({ id });
     return component;
   }
 }
