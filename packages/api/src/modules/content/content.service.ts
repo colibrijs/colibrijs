@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import type { Repository } from 'typeorm';
+import { In, type Repository } from 'typeorm';
 
 import { Element, type ElementConstructorOptions, type FindOptions } from './element.entity';
 
@@ -8,8 +8,21 @@ export class ContentService {
   private readonly content!: Repository<Element>;
 
   /** Creates content with specified elements */
-  create(elementsData: ElementConstructorOptions[]): Promise<Element[]> {
-    return this.content.save(this.content.create(elementsData));
+  async create(elementsData: ElementConstructorOptions[]): Promise<Element[]> {
+    const elementsRaw = elementsData.map((elementData) =>
+      this.content.create({
+        ...elementData,
+        component: { id: elementData.componentId },
+      })
+    );
+
+    const { identifiers } = await this.content.insert(elementsRaw);
+
+    return this.content.find({
+      where: {
+        id: In(identifiers.map((identifier) => identifier.id)),
+      },
+    });
   }
 
   /** Find content by specified options */

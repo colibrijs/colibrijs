@@ -4,7 +4,8 @@ import { DataSource } from 'typeorm';
 
 import { CreateComponents1693430005821 } from './migrations/1693430005821-create-components';
 import { ComponentsBase1698262164083 } from './migrations/1698262164083-components-base';
-import { CreateContent1698782728601 } from './migrations/1698782728601-create-content';
+import { CreateContent1698872382913 } from './migrations/1698872382913-create-content';
+
 import { Component } from './modules/components';
 import { Element } from './modules/content';
 
@@ -21,7 +22,7 @@ export const dataSource = new DataSource({
   migrations: [
     CreateComponents1693430005821,
     ComponentsBase1698262164083,
-    CreateContent1698782728601,
+    CreateContent1698872382913,
   ],
   synchronize: false,
 });

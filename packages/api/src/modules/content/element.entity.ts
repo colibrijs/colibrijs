@@ -1,5 +1,5 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Component } from '../components';
 
@@ -9,7 +9,7 @@ export class Element {
   @ApiProperty({ type: String, required: true })
   id!: string;
 
-  @OneToOne(() => Component, { eager: true, nullable: false })
+  @ManyToOne(() => Component, { eager: true, nullable: false })
   @JoinColumn()
   @ApiProperty({ type: () => Component, required: true })
   component!: Component;
