@@ -1,10 +1,10 @@
+import type { Component } from './components';
 import { client } from '../client';
 
-export interface Element {
+export interface Element<T extends object = object> {
   id: string;
-  componentName: string;
-  packageName: string;
-  src: string;
+  component: Component;
+  props: T;
 }
 
 export type ContentFindOptions = Omit<Partial<Element>, 'component'>;
