@@ -2,6 +2,7 @@ import React from 'react';
 import type { Preview } from '@storybook/react';
 
 import { ProviderQueryClient } from '../src/components/provider-query-client';
+import './global.css';
 
 export default {
   decorators: [
