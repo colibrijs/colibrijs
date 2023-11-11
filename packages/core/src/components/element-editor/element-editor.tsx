@@ -4,18 +4,23 @@ import { Button, Input } from 'antd';
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useState,
   type ChangeEvent,
   type PropsWithChildren,
-  useMemo,
 } from 'react';
 
 import { styles } from './element-editor.styles';
 
+export interface ChangePropsPayload<T extends object = object> {
+  element: Element;
+  newProps: T;
+}
+
 export type Props<T extends object> = PropsWithChildren<{
   element: Element<T>;
   changingInProgress: boolean;
-  onChangeProps: (props: T) => void;
+  onChangeProps: (payload: ChangePropsPayload<T>) => void;
 }>;
 
 export function ElementEditor<T extends object>(props: Props<T>) {
@@ -44,8 +49,8 @@ export function ElementEditor<T extends object>(props: Props<T>) {
 
   const savePropsHandler = useCallback(() => {
     const newProps = JSON.parse(strngifiedProps) as T;
-    onChangeProps(newProps);
-  }, [strngifiedProps, onChangeProps]);
+    onChangeProps({ element, newProps });
+  }, [element, strngifiedProps, onChangeProps]);
 
   useEffect(
     () => setStringifiedProps(stringifyProps(element.props)),

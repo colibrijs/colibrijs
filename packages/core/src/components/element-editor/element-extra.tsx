@@ -1,21 +1,23 @@
 import { DeleteOutlined } from '@ant-design/icons';
+import type { Element } from '@colibrijs/api-client';
 import { Button } from 'antd';
 import React, { useCallback, type MouseEvent } from 'react';
 
 export interface Props {
+  element: Element;
   removingInProgress: boolean;
-  onRemove: () => void;
+  onRemove: (element: Element) => void;
 }
 
 export function ElementExtra(props: Props) {
-  const { removingInProgress, onRemove } = props;
+  const { element, removingInProgress, onRemove } = props;
 
   const removeHandler = useCallback(
     (event: MouseEvent) => {
       event.stopPropagation();
-      onRemove();
+      onRemove(element);
     },
-    [onRemove]
+    [element, onRemove]
   );
 
   return (
