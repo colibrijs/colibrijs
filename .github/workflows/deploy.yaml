@@ -16,16 +16,21 @@ jobs:
           cache: yarn
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
-      - name: Build packages
-        run: |
-          yarn workspace @colibrijs/api build
-          yarn workspace @colibrijs/cms build
-          yarn workspace @colibrijs/app build
-      - name: Install only production dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts --production
       - name: Save metadata about deployment
         uses: ./.github/workflows/deployment-metadata
         id: metadata
+        with:
+          domain: ${{ vars.DOMAIN }}
+      - name: Build packages
+        run: |
+          yarn concurrently -n "api,cms,app" \
+            "yarn workspace @colibrijs/api build" \
+            "yarn workspace @colibrijs/cms build" \
+            "yarn workspace @colibrijs/app build"
+        env:
+          API_BASE_URL: ${{ steps.metadata.output.branchApiBaseUrl }}
+      - name: Install only production dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts --production
       - name: Login in to the container registry
         uses: docker/login-action@v2
         with:

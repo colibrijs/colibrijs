@@ -21,6 +21,8 @@ jobs:
       - name: Save metadata about deployment
         uses: ./.github/workflows/deployment-metadata
         id: metadata
+        with:
+          domain: ${{ vars.DOMAIN }}
       - name: Download the github-pages artifact
         id: download-artifact
         uses: dawidd6/action-download-artifact@v2

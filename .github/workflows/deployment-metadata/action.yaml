@@ -1,5 +1,11 @@
 name: Get metadata for deployment
 
+inputs:
+  domain:
+    description: Domain where application published
+    required: true
+    type: string
+
 outputs:
   branch:
     description: Name of published branch
@@ -10,6 +16,12 @@ outputs:
   release:
     description: Name of release
     value: ${{ steps.save-namespace-release.outputs.release }}
+  productionApiBaseUrl:
+    description: Base url of production api
+    value: ${{ steps.save-production-api-base-url.outputs.productionApiBaseUrl }}
+  branchApiBaseUrl:
+    description: Base url of branch api
+    value: ${{ steps.save-branch-api-base-url.outputs.branchApiBaseUrl }}
 
 runs:
   using: composite
@@ -29,9 +41,22 @@ runs:
         NAMESPACE: ${{ format('colibrijs-{0}', steps.save-branch.outputs.branch) }}
         # The 'colibrijs' for main branch and 'branchName' for other branches
         RELEASE: ${{ steps.save-branch.outputs.branch == 'main' && 'colibrijs' || steps.save-branch.outputs.branch }}
+    - name: Save production api base url
+      id: save-production-api-base-url
+      shell: bash
+      run: echo "productionApiBaseUrl=api.$DOMAIN" >> $GITHUB_OUTPUT
+      env:
+        DOMAIN: ${{ inputs.DOMAIN }}
+    - name: Save branch api base url
+      id: save-branch-api-base-url
+      shell: bash
+      run: echo "branchApiBaseUrl=api-${{ steps.save-branch.outputs.branch }}.$DOMAIN" >> $GITHUB_OUTPUT
+      env:
+        DOMAIN: ${{ inputs.DOMAIN }}
     - name: Log outputs
       shell: bash
       run: |
         echo "Name of published branch: ${{ steps.save-branch.outputs.branch }}"
         echo "Name of namespace: ${{ steps.save-namespace-release.outputs.namespace }}"
-        echo "Name of release: ${{ steps.save-namespace-release.outputs.release }}"
+        echo "Base url of production api: ${{ steps.save-production-api-base-url.outputs.productionApiBaseUrl }}"
+        echo "Base url of branch api: ${{ steps.save-branch-api-base-url.outputs.branchApiBaseUrl }}"

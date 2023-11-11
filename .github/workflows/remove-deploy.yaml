@@ -13,6 +13,8 @@ jobs:
       - name: Save metadata about deployment
         uses: ./.github/workflows/deployment-metadata
         id: metadata
+        with:
+          domain: ${{ vars.DOMAIN }}
       - name: Delete docker image
         uses: bots-house/ghcr-delete-image-action@v1.1.0
         with:
