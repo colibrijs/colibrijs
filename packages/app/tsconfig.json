@@ -10,8 +10,17 @@
     "incremental": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
+  "include": [
+    "./src/",
+    ".next/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

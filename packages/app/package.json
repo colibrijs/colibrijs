@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@colibrijs/api-client": "^1.0.0",
     "@colibrijs/core": "^1.0.0",
     "@module-federation/node": "^1.0.7",
     "next": "^14.0.0",

@@ -13,7 +13,7 @@ export interface Leaf {
   children: Leaf[];
 }
 
-type Tree = Leaf[];
+export type Tree = Leaf[];
 
 export interface Props {
   tree: Tree;
