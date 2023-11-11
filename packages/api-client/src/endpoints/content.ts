@@ -13,13 +13,18 @@ export interface ElementConstructorOptions extends Omit<Element, 'id' | 'compone
 }
 
 export const content = {
-  async create(options: ElementConstructorOptions[]): Promise<Element[]> {
+  async create(options: ElementConstructorOptions): Promise<Element> {
     const response = await client.post('/content', options);
     return response.data;
   },
 
   async findBy(options: ContentFindOptions): Promise<Element[]> {
-    const response = await client.get(`/content`, { params: options });
+    const response = await client.get('/content', { params: options });
+    return response.data;
+  },
+
+  async updateProps(id: string, newProps: object): Promise<Element> {
+    const response = await client.put(`/content/${id}/props`, newProps);
     return response.data;
   },
 

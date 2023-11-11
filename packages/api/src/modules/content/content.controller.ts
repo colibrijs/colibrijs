@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { ContentService } from './content.service';
@@ -10,10 +10,10 @@ export class ContentController {
   @Inject(ContentService)
   private readonly contentService!: ContentService;
 
-  @ApiCreatedResponse({ type: [Element] })
-  @ApiBody({ type: [ElementConstructorOptions] })
+  @ApiCreatedResponse({ type: Element })
+  @ApiBody({ type: ElementConstructorOptions })
   @Post()
-  create(@Body() options: ElementConstructorOptions[]): Promise<Element[]> {
+  create(@Body() options: ElementConstructorOptions): Promise<Element> {
     return this.contentService.create(options);
   }
 
@@ -21,6 +21,13 @@ export class ContentController {
   @Get()
   findBy(@Query() options: FindOptions): Promise<Element[]> {
     return this.contentService.findBy(options);
+  }
+
+  @ApiOkResponse({ type: Element })
+  @ApiBody({ type: Object })
+  @Put(':id/props')
+  updateProps(@Param('id') id: string, @Body() newProps: object): Promise<Element> {
+    return this.contentService.updateProps(id, newProps);
   }
 
   @ApiOkResponse({ type: Element })
