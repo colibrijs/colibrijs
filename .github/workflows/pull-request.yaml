@@ -35,7 +35,7 @@ jobs:
       - name: Build storybook for interaction tests
         run: yarn workspace @colibrijs/core build
         env:
-          API_BASE_URL: ${{ format('api-{0}.{1}', steps.metadata.outputs.branch, vars.DOMAIN) }}
+          API_BASE_URL: ${{ github.event_name == 'pull_request' && format('http://api-{0}.{1}', steps.metadata.outputs.branch, vars.DOMAIN) || format('http://api.{1}', vars.DOMAIN) }}
           EXAMPLE_BUILD_SRC: http://localhost:3001/
           REPOSITORY: ${{ github.repository }}
           BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
@@ -47,7 +47,7 @@ jobs:
       - name: Build storybook for github pages
         run: yarn workspace @colibrijs/core build
         env:
-          API_BASE_URL: ${{ format('api-{0}.{1}', steps.metadata.outputs.branch, vars.DOMAIN) }}
+          API_BASE_URL: ${{ github.event_name == 'pull_request' && format('http://api-{0}.{1}', steps.metadata.outputs.branch, vars.DOMAIN) || format('http://api.{1}', vars.DOMAIN) }}
           REPOSITORY: ${{ github.repository }}
           BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
       - name: Upload github pages storybook to artifact
