@@ -15,7 +15,17 @@ describe('Remote - integration getRemoteEntryFileName', () => {
     const importRemoteSpy = jest
       .spyOn(importRemoteModule, 'importRemote')
       .mockResolvedValueOnce({ TestComponent });
-    const props: Props = { ...defaultProps, componentName: 'TestComponent', ssr: true };
+    const props: Props = {
+      ...defaultProps,
+      ssr: true,
+      element: {
+        ...defaultProps.element,
+        component: {
+          ...defaultProps.element.component,
+          componentName: 'TestComponent',
+        },
+      },
+    };
 
     // Act
     await act(async () => render(<Remote {...props} />));
