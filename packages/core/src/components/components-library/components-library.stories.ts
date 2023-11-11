@@ -9,7 +9,7 @@ type Story = StoryObj<typeof ComponentsLibrary>;
 export default {
   component: ComponentsLibrary,
   title: 'ComponentsLibrary',
-  args: {},
+  args: { editable: false, selectable: false },
   parameters: {
     mockData: [
       ...ComponentEditorMeta.parameters.mockData,
@@ -44,3 +44,11 @@ export default {
 } satisfies Meta<typeof ComponentsLibrary>;
 
 export const Default: Story = {};
+
+export const Editable: Story = {
+  args: { editable: true },
+};
+
+export const Selectable: Story = {
+  args: { selectable: true },
+};
