@@ -6,7 +6,7 @@ export const styles: Record<'root' | 'sidebar' | 'content', CSSProperties> = {
   },
 
   sidebar: {
-    padding: '20px 8px',
+    padding: '20px 16px',
   },
 
   content: {
