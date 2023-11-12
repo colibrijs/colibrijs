@@ -2,26 +2,33 @@ import { getExampleBuildSrc } from '../../remote/__tests__/test-data';
 import type { Props } from '../page';
 
 export const defaultProps: Props = {
+  ssr: false,
   tree: [
     {
       id: '1',
       element: {
-        componentName: 'Example',
-        packageName: '@colibrijs/example',
+        id: '1',
         props: { text: 'parent' },
-        src: getExampleBuildSrc(),
-        ssr: false,
+        component: {
+          id: '1',
+          componentName: 'Example',
+          packageName: '@colibrijs/example',
+          src: getExampleBuildSrc(),
+        },
       },
       children: [
         {
           id: '2',
           children: [],
           element: {
-            componentName: 'Example',
-            packageName: '@colibrijs/example',
+            id: '2',
             props: { text: 'child' },
-            src: getExampleBuildSrc(),
-            ssr: false,
+            component: {
+              id: '1',
+              componentName: 'Example',
+              packageName: '@colibrijs/example',
+              src: getExampleBuildSrc(),
+            },
           },
         },
       ],
@@ -30,11 +37,14 @@ export const defaultProps: Props = {
       id: '3',
       children: [],
       element: {
-        componentName: 'Example',
-        packageName: '@colibrijs/example',
+        id: '3',
         props: { text: 'sibling' },
-        src: getExampleBuildSrc(),
-        ssr: false,
+        component: {
+          id: '1',
+          componentName: 'Example',
+          packageName: '@colibrijs/example',
+          src: getExampleBuildSrc(),
+        },
       },
     },
   ],

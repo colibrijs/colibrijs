@@ -11,7 +11,16 @@ describe('Remote - integration importRemote', () => {
   it('renders the result of importRemote(parameters).componentName', async () => {
     // Arrange
     jest.spyOn(importRemoteModule, 'importRemote').mockResolvedValueOnce({ TestComponent });
-    const props: Props = { ...defaultProps, componentName: 'TestComponent' };
+    const props: Props = {
+      ...defaultProps,
+      element: {
+        ...defaultProps.element,
+        component: {
+          ...defaultProps.element.component,
+          componentName: 'TestComponent',
+        },
+      },
+    };
 
     // Act
     const { getByTestId } = await act(async () => render(<Remote {...props} />));

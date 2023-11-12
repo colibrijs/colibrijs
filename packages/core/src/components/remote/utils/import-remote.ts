@@ -22,7 +22,10 @@ export async function importRemote(options: ImportRemoteOptions) {
     ? await new Promise((resolve) => __webpack_require__.l(fullUrl, resolve, module))
     : await injectScript({ url: fullUrl, global: module });
 
-  container.init(__webpack_share_scopes__.default);
+  if (!__webpack_share_scopes__.default) {
+    container.init(__webpack_share_scopes__.default);
+  }
+
   const factory = await container.get(module);
   return factory();
 }

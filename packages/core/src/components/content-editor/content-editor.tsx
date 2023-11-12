@@ -3,14 +3,23 @@ import { api } from '@colibrijs/api-client';
 import type { Component, Element } from '@colibrijs/api-client';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Button, Collapse, type CollapseProps, Flex, Skeleton, Typography } from 'antd';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ComponentsLibraryModal } from '../components-library';
 import { ElementEditor, ElementExtra, type ChangePropsPayload } from '../element-editor';
 
-export function ContentEditor() {
+export interface Props {
+  onChangeContent: (content: Element[]) => void;
+}
+
+export function ContentEditor(props: Props) {
+  const { onChangeContent } = props;
   const [isComponentSelecting, setIsComponentSelecting] = useState(false);
   const [content, setContent] = useState<Element[]>([]);
+
+  useEffect(() => {
+    onChangeContent(content);
+  }, [content, onChangeContent]);
 
   const { isLoading } = useQuery({
     queryKey: ['content'],

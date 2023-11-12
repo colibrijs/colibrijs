@@ -18,9 +18,15 @@ export function getExampleBuildSrc(): string {
 }
 
 export const defaultProps: Props = {
-  componentName: 'Example',
-  packageName: '@colibrijs/example',
-  src: getExampleBuildSrc(),
   ssr: false,
-  props: { text: 'I am an example' },
+  element: {
+    id: '1',
+    props: { text: 'I am an example' },
+    component: {
+      id: '1',
+      componentName: 'Example',
+      packageName: '@colibrijs/example',
+      src: getExampleBuildSrc(),
+    },
+  },
 };

@@ -1,11 +1,9 @@
-import { api } from '@colibrijs/api-client';
+import { api, type Component } from '@colibrijs/api-client';
 import { useMutation } from '@tanstack/react-query';
 import { Form, Input, Modal } from 'antd';
 import React, { useCallback } from 'react';
 
-import type { RemoteProps } from '../remote';
-
-type ComponentData = Pick<RemoteProps, 'componentName' | 'packageName' | 'src'>;
+type ComponentData = Pick<Component, 'componentName' | 'packageName' | 'src'>;
 
 export interface Props {
   opened?: boolean;

@@ -18,9 +18,16 @@ describe('Remote - integration sanitizePackageName', () => {
 
     const props: Props = {
       ...defaultProps,
-      componentName: 'TestComponent',
-      src: 'http://build-src.local/',
-      packageName: '@colibrijs/example',
+      ssr: true,
+      element: {
+        ...defaultProps.element,
+        component: {
+          ...defaultProps.element.component,
+          componentName: 'TestComponent',
+          src: 'http://build-src.local/',
+          packageName: '@colibrijs/example',
+        },
+      },
     };
 
     // Act
@@ -28,7 +35,10 @@ describe('Remote - integration sanitizePackageName', () => {
 
     // Assert
     const lastCallParameters = importRemoteSpy.mock.lastCall?.[0];
-    expect(lastCallParameters).toHaveProperty('module', sanitizePackageName(props.packageName));
+    expect(lastCallParameters).toHaveProperty(
+      'module',
+      sanitizePackageName(props.element.component.packageName)
+    );
   });
 
   it('calls importRemote with parameter "scope" that is result of sanitizePackageName', async () => {
@@ -39,9 +49,16 @@ describe('Remote - integration sanitizePackageName', () => {
 
     const props: Props = {
       ...defaultProps,
-      componentName: 'TestComponent',
-      src: 'http://build-src.local/',
-      packageName: '@colibrijs/example',
+      ssr: true,
+      element: {
+        ...defaultProps.element,
+        component: {
+          ...defaultProps.element.component,
+          componentName: 'TestComponent',
+          src: 'http://build-src.local/',
+          packageName: '@colibrijs/example',
+        },
+      },
     };
 
     // Act
@@ -49,6 +66,9 @@ describe('Remote - integration sanitizePackageName', () => {
 
     // Assert
     const lastCallParameters = importRemoteSpy.mock.lastCall?.[0];
-    expect(lastCallParameters).toHaveProperty('scope', sanitizePackageName(props.packageName));
+    expect(lastCallParameters).toHaveProperty(
+      'scope',
+      sanitizePackageName(props.element.component.packageName)
+    );
   });
 });

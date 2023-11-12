@@ -18,9 +18,15 @@ describe('Remote - integration getPackageUrl', () => {
 
     const props: Props = {
       ...defaultProps,
-      componentName: 'TestComponent',
-      src: 'http://build-src.local/',
-      packageName: '@colibrijs/example',
+      element: {
+        ...defaultProps.element,
+        component: {
+          ...defaultProps.element.component,
+          componentName: 'TestComponent',
+          src: 'http://build-src.local/',
+          packageName: '@colibrijs/example',
+        },
+      },
     };
 
     // Act
@@ -28,6 +34,9 @@ describe('Remote - integration getPackageUrl', () => {
 
     // Assert
     const lastCallParameters = importRemoteSpy.mock.lastCall?.[0];
-    expect(lastCallParameters).toHaveProperty('url', getPackageUrl(props.src, props.packageName));
+    expect(lastCallParameters).toHaveProperty(
+      'url',
+      getPackageUrl(props.element.component.src, props.element.component.packageName)
+    );
   });
 });
