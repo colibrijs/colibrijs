@@ -117,3 +117,11 @@ kubectl --kubeconfig ~/.kube/config get namespaces
 # kube-public       Active   25h
 # kube-system       Active   25h
 ```
+
+## Install other tools
+
+1. Install cert manager for ssl certificates
+
+```bash
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.yaml
+```
