@@ -4,32 +4,28 @@ import { fn } from '@storybook/test';
 
 import { useState, useCallback } from 'react';
 
-import { schema } from './schema';
 import { SidebarDecorator } from '../../layout/sidebar-decorator';
-import { PropsEditor, type Props } from '../props-editor';
+import { PropEditor, type Props } from '../prop-editor';
 
-export type PropsEditorMeta = Meta<typeof PropsEditor>;
-export type Story = StoryObj<typeof PropsEditor>;
+export type PropEditorMeta = Meta<typeof PropEditor>;
+export type Story = StoryObj<typeof PropEditor>;
 
 export default {
   component: Default,
-  title: 'PropsEditor',
+  title: 'PropEditor',
   args: {
     onChange: fn(),
-    schema,
-    value: {
-      name: 'Kekich',
-      age: 228,
+    property: {
+      type: 'string',
+      description: 'description',
     },
+    value: 'some valuev',
+    name: 'name',
   },
   decorators: [SidebarDecorator],
-} satisfies PropsEditorMeta;
+} satisfies PropEditorMeta;
 
-export function Default<T extends Record<string, SchemaValues>>({
-  value,
-  schema,
-  onChange,
-}: Props<T>) {
+export function Default<T extends SchemaValues>({ name, value, property, onChange }: Props<T>) {
   const [currentValue, setCurrentValue] = useState(value);
   const changeHandler = useCallback(
     (newValue: T) => {
@@ -39,5 +35,7 @@ export function Default<T extends Record<string, SchemaValues>>({
     [onChange]
   );
 
-  return <PropsEditor value={currentValue} schema={schema} onChange={changeHandler} />;
+  return (
+    <PropEditor name={name} value={currentValue} property={property} onChange={changeHandler} />
+  );
 }
