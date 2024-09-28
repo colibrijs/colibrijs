@@ -1,17 +1,49 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, PlusOutlined } from '@ant-design/icons';
 import type { IElement } from '@colibrijs/types';
-import { Button, Drawer, Flex, Input, Tree, type TreeDataNode, Tooltip, Typography } from 'antd';
-import { useCallback, useMemo, useState, type Key, type ChangeEvent } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import {
+  Button,
+  ConfigProvider,
+  Drawer,
+  Input,
+  Tree,
+  type TreeDataNode,
+  Tooltip,
+  theme,
+} from 'antd';
+import cn from 'classnames';
+import { useCallback, useMemo, useState, type Key, type ChangeEvent, useEffect } from 'react';
 
 import styles from './content-editor.module.css';
+import { useApi } from '../../hooks/use-api';
+import { Content } from '../content';
 
 export interface Props {
-  content: IElement[];
-  onChange: (content: IElement[]) => void;
+  pageRoute: string;
 }
 
-export function ContentEditor({ content, onChange }: Props) {
+export function ContentEditor({ pageRoute }: Props) {
+  const api = useApi();
+
+  const [content, setContent] = useState<IElement[]>([]);
   const [selectedElement, setSelectedElement] = useState<IElement | null>(null);
+  const [treeOpened, setTreeOpened] = useState(true);
+  const darkTheme = useMemo(() => ({ algorithm: theme.darkAlgorithm }), []);
+
+  const toggleTree = useCallback(() => {
+    setTreeOpened((currentlyOpened) => !currentlyOpened);
+  }, []);
+
+  const { data: loadedContent } = useQuery({
+    queryKey: ['content', pageRoute],
+    queryFn: () => api.elements.get(pageRoute),
+  });
+
+  useEffect(() => {
+    if (loadedContent) {
+      setContent(loadedContent);
+    }
+  }, [loadedContent]);
 
   const treeData = useMemo(() => {
     return content.map(
@@ -33,9 +65,9 @@ export function ContentEditor({ content, onChange }: Props) {
       newContent.splice(elementIndex, 1, newElement);
 
       setSelectedElement(newElement);
-      onChange(newContent);
+      setContent(newContent);
     },
-    [content, selectedElement, onChange]
+    [content, selectedElement]
   );
 
   const selectHandler = useCallback(
@@ -54,32 +86,57 @@ export function ContentEditor({ content, onChange }: Props) {
   );
 
   return (
-    <div className={styles.container} data-testid="content-editor">
-      <Typography.Title level={3}>
-        <Flex align="center" justify="space-between">
-          <span>Контент</span>
-          <Tooltip title="Добавить элемент">
-            <Button icon={<PlusOutlined />} />
-          </Tooltip>
-        </Flex>
-      </Typography.Title>
-      <Tree treeData={treeData} showLine onSelect={selectHandler} />
-      <Drawer
-        open={Boolean(selectedElement)}
-        mask={false}
-        title={
-          <span data-testid="element-editor-drawer__title">{selectedElement?.component.name}</span>
-        }
-        data-testid="element-editor-drawer"
-      >
-        {selectedElement && (
-          <Input.TextArea
-            value={JSON.stringify(selectedElement.props, null, 2)}
-            onChange={changeElementHandler}
-            autoSize
-          />
-        )}
-      </Drawer>
+    <div
+      className={cn(styles.container, { [styles.opened!]: treeOpened })}
+      data-testid="content-editor"
+    >
+      <ConfigProvider theme={darkTheme}>
+        <Drawer
+          closable={false}
+          getContainer={false}
+          mask={false}
+          placement="left"
+          open={treeOpened}
+          title="Контент"
+          extra={
+            <Tooltip title="Добавить элемент">
+              <Button icon={<PlusOutlined />} />
+            </Tooltip>
+          }
+        >
+          <Tree treeData={treeData} showLine onSelect={selectHandler} />
+        </Drawer>
+        <Button
+          className={cn(styles.toggler!)}
+          icon={treeOpened ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
+          size="large"
+          htmlType="button"
+          onClick={toggleTree}
+        />
+      </ConfigProvider>
+      <Content content={content} />
+      <ConfigProvider theme={darkTheme}>
+        <Drawer
+          data-testid="element-editor-drawer"
+          closable={false}
+          open={Boolean(selectedElement)}
+          mask={false}
+          placement="right"
+          title={
+            <span data-testid="element-editor-drawer__title">
+              {selectedElement?.component.name}
+            </span>
+          }
+        >
+          {selectedElement && (
+            <Input.TextArea
+              value={JSON.stringify(selectedElement.props, null, 2)}
+              onChange={changeElementHandler}
+              autoSize
+            />
+          )}
+        </Drawer>
+      </ConfigProvider>
     </div>
   );
 }

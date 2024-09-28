@@ -1,20 +1,18 @@
-import { exampleElements } from '@colibrijs/mocks/elements';
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { ComponentProps } from 'react';
 
-import { SidebarDecorator } from '../../layout/sidebar-decorator';
+import { withMockedApi, type WithMockedApi } from '../../../hooks/use-api/mocked';
 import { ContentEditor } from '../content-editor';
 
-export type StoryMeta = Meta<typeof ContentEditor>;
-export type Story = StoryObj<typeof ContentEditor>;
+export type StoryMeta = Meta<WithMockedApi<ComponentProps<typeof ContentEditor>>>;
+export type Story = StoryObj<WithMockedApi<ComponentProps<typeof ContentEditor>>>;
 
 export default {
   component: ContentEditor,
   title: 'ContentEditor',
-  decorators: [SidebarDecorator],
+  decorators: [withMockedApi()],
   args: {
-    content: exampleElements,
-    onChange: fn(),
+    pageRoute: '/',
   },
 } satisfies StoryMeta;
 
