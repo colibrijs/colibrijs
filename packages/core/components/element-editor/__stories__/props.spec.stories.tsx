@@ -1,9 +1,11 @@
-import { exampleElement } from '@colibrijs/mocks/elements';
-import { expect, fn, screen, userEvent, fireEvent } from '@storybook/test';
+import { exampleElement, textElement } from '@colibrijs/mocks/elements';
+import { expect, fn, screen, fireEvent } from '@storybook/test';
 
 import ElementAddStoriesMeta from './element-editor.stories';
 import type { ElementEditorMeta, ElementEditorStory } from './element-editor.stories';
 import { ElementRemoveTO } from '../../element-remove/test-object';
+import { PropsEditorTO } from '../../props-editor/test-object';
+import { ElementEditorTO } from '../test-object';
 
 export default {
   ...ElementAddStoriesMeta,
@@ -13,33 +15,37 @@ export default {
 export const OpenProp: ElementEditorStory = {
   name: 'При передаче open пропса, модалка открыта',
   args: { open: true },
-  play: async () => {
-    const modal = await screen.findByTestId('element-editor');
+  play: async ({ canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
 
-    expect(modal).toBeVisible();
+    expect(await elementEditor.isOpened(), 'Проверяю, что модалка открыта').toBe(true);
   },
 };
 
 export const OnCloseProp: ElementEditorStory = {
   name: 'При клике на крестик, вызывается onClose пропс',
   args: { open: true, onClose: fn() },
-  play: async ({ args }) => {
-    const modal = await screen.findByTestId('element-editor');
-    const closeButton = modal.querySelector('.ant-drawer-close')!;
-    await userEvent.click(closeButton);
+  play: async ({ args, canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
+    await elementEditor.clickClose();
 
     expect(args.onClose).toHaveBeenCalled();
   },
 };
 
 export const ElementProps: ElementEditorStory = {
-  name: 'element.props выводится в textarea по дефолту',
-  args: { element: exampleElement },
-  play: async ({ args }) => {
-    const textarea: HTMLTextAreaElement = await screen.findByTestId('element-editor__textarea');
-    const elementProps = JSON.stringify(args.element.props, null, 2);
+  name: 'Значения пропсов элемента выводятся в пропс-эдиторе',
+  args: { element: textElement },
+  play: async ({ args, canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
+    await elementEditor.waitForPropsEditor();
+    const propsEditor = new PropsEditorTO({ canvasElement: document.body, step }, 'props-editor');
 
-    expect(textarea).toHaveValue(elementProps);
+    expect(
+      propsEditor.getValue('text'),
+      'Проверяю, что значение редактора равно значению элемента в пропсе'
+      // @ts-expect-error -- не верит что поле text есть в props
+    ).toBe(args.element.props.text);
   },
 };
 
